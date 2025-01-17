@@ -9,5 +9,7 @@
         public string ReleaseDate { get; set; }
 
         public string CoverUrl { get; set; }
+
+        public string Platforms { get; set; }
     }
 }
