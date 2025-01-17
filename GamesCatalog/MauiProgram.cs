@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using GamesCatalog.ViewModels;
+using GamesCatalog.ViewModels.IGDBSearch;
 using GamesCatalog.Views;
 using GamesCatalog.Views.IGDBSearch;
 using Microsoft.Extensions.Logging;
