@@ -34,7 +34,21 @@ namespace GamesCatalog.ViewModels.IGDBSearch
                 Platforms = "PC, PS4, PS5, Xbox One, Xbox Series X/S"
             }
             ];
-                
+
+        string searchText;
+
+        public string SearchText
+        {
+            get => searchText;
+            set
+            {
+                if (searchText != value)
+                {
+                    SetProperty(ref (searchText), value);
+                }
+            }
+        }
+
         public ObservableCollection<UIIGDBGame> ListGames
         {
             get => listGames;
