@@ -8,7 +8,11 @@
     xmlns:vm="clr-namespace:GamesCatalog.ViewModels.IGDBSearch"
     Title="IGDBResults"
     x:DataType="vm:IGDBResultsVM">
-    <VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Border
             Padding="10,0,10,5"
             HorizontalOptions="FillAndExpand"
@@ -18,14 +22,17 @@
                 MaxLength="100"
                 Text="{Binding SearchText}" />
         </Border>
-        <Border
-            Margin="5"
-            Padding="5"
-            BackgroundColor="Transparent"
-            StrokeShape="RoundRectangle 10"
+        <ScrollView
+            Grid.Row="1"
+            Orientation="Vertical"
             VerticalOptions="FillAndExpand">
-            <ScrollView>
-                <StackLayout>
+            <VerticalStackLayout>
+                <Border
+                    Margin="5"
+                    Padding="5"
+                    BackgroundColor="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    VerticalOptions="FillAndExpand">
                     <ListView
                         CachingStrategy="RecycleElement"
                         HasUnevenRows="True"
@@ -73,8 +80,8 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </StackLayout>
-            </ScrollView>
-        </Border>
-    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
