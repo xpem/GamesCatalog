@@ -3,6 +3,7 @@
     x:Class="GamesCatalog.Views.IGDBSearch.IGDBResults"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:GamesCatalog.Utils.Behaviors"
     xmlns:components="clr-namespace:GamesCatalog.Components"
     xmlns:model="clr-namespace:GamesCatalog.Models.IGDBApi"
     xmlns:vm="clr-namespace:GamesCatalog.ViewModels.IGDBSearch"
@@ -15,73 +16,75 @@
         </Grid.RowDefinitions>
         <Border
             Padding="10,0,10,5"
-            HorizontalOptions="FillAndExpand"
             Style="{StaticResource BorderPrimary}">
             <components:BorderedEntry
                 LabelText="Search"
                 MaxLength="100"
                 Text="{Binding SearchText}" />
         </Border>
-        <ScrollView
+        <Border
             Grid.Row="1"
-            Orientation="Vertical"
-            VerticalOptions="FillAndExpand">
-            <VerticalStackLayout>
-                <Border
-                    Margin="5"
-                    Padding="5"
-                    BackgroundColor="Transparent"
-                    StrokeShape="RoundRectangle 10"
-                    VerticalOptions="FillAndExpand">
-                    <ListView
-                        CachingStrategy="RecycleElement"
-                        HasUnevenRows="True"
-                        ItemsSource="{Binding ListGames}"
-                        SelectionMode="None">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:UIIGDBGame">
-                                <ViewCell>
-                                    <Border
-                                        Margin="0,0,0,5"
-                                        Padding="10"
-                                        BackgroundColor="#101923"
-                                        Stroke="#2B659B"
-                                        StrokeShape="RoundRectangle 10">
-                                        <Grid Padding="10">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Image
-                                                Grid.Column="0"
-                                                Aspect="AspectFit"
-                                                HeightRequest="100"
-                                                Source="{Binding CoverUrl}"
-                                                VerticalOptions="Center"
-                                                WidthRequest="150" />
-                                            <StackLayout Grid.Column="1" Margin="10,0,0,0">
-                                                <Label
-                                                    FontSize="Large"
-                                                    LineBreakMode="TailTruncation"
-                                                    Text="{Binding Name}" />
-                                                <Label
-                                                    FontAttributes="Italic"
-                                                    FontSize="Micro"
-                                                    Text="{Binding ReleaseDate, StringFormat='Release: {0:F0}'}"
-                                                    TextColor="#98BDD3" />
-                                                <Label
-                                                    FontSize="Micro"
-                                                    Text="{Binding Platforms, StringFormat='Platforms: {0:F0}'}"
-                                                    TextColor="#98BDD3" />
-                                            </StackLayout>
-                                        </Grid>
-                                    </Border>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Border>
-            </VerticalStackLayout>
-        </ScrollView>
+            Margin="5"
+            Padding="5"
+            StrokeShape="RoundRectangle 10">
+            <ListView
+                CachingStrategy="RecycleElement"
+                HasUnevenRows="True"
+                ItemsSource="{Binding ListGames}"
+                SelectionMode="None">
+                <ListView.Behaviors>
+                    <behaviors:InfiniteScrollBehavior LoadMoreCommand="{Binding LoadMoreCommand}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:UIIGDBGame">
+                        <ViewCell>
+                            <Border
+                                Margin="0,0,0,5"
+                                Padding="10"
+                                BackgroundColor="#101923"
+                                Stroke="#2B659B"
+                                StrokeShape="RoundRectangle 10">
+                                <Grid Padding="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Grid.Column="0"
+                                        Aspect="AspectFit"
+                                        HeightRequest="100"
+                                        Source="{Binding CoverUrl}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="150" />
+                                    <StackLayout Grid.Column="1" Margin="10,0,0,0">
+                                        <Label
+                                            FontSize="Large"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Name}" />
+                                        <Label
+                                            FontAttributes="Italic"
+                                            FontSize="Micro"
+                                            Text="{Binding ReleaseDate, StringFormat='Release: {0:F0}'}"
+                                            TextColor="#98BDD3" />
+                                        <Label
+                                            FontSize="Micro"
+                                            Text="{Binding Platforms, StringFormat='Platforms: {0:F0}'}"
+                                            TextColor="#98BDD3" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <ActivityIndicator
+                        HorizontalOptions="Center"
+                        IsRunning="{Binding IsBusy}"
+                        IsVisible="{Binding IsBusy}"
+                        VerticalOptions="Center"
+                        Color="{StaticResource ActiveColor}" />
+                </ListView.Footer>
+            </ListView>
+        </Border>
     </Grid>
 </ContentPage>

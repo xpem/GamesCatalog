@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace GamesCatalog.ViewModels.IGDBSearch
 {
-    public partial class IGDBResultsVM : ObservableObject
+    public partial class IGDBResultsVM : ViewModelBase
     {
         private ObservableCollection<UIIGDBGame> listGames = [];
 
@@ -28,15 +28,16 @@ namespace GamesCatalog.ViewModels.IGDBSearch
             }
         }
 
+        public int CurrentPage { get; set; }
+
         public ObservableCollection<UIIGDBGame> ListGames
         {
             get => listGames;
             set => SetProperty(ref listGames, value);
         }
 
-
         private async Task SearchGamesList()
-        {
+        { 
             if (Searching)
                 return;
 
@@ -51,21 +52,24 @@ namespace GamesCatalog.ViewModels.IGDBSearch
                 if (ListGames.Count > 0)
                     ListGames.Clear();
 
-                try
-                {
-                    await LoadIGDBGamesList(0);
-                }
-                catch (Exception e)
-                {
-                    throw;
-                }
+                CurrentPage = 0;
+                await LoadIGDBGamesList(CurrentPage);
 
                 Searching = false;
             }
         }
 
+        [RelayCommand]
+        public Task LoadMore()
+        {
+            CurrentPage++;
+            return LoadIGDBGamesList(CurrentPage);
+        }
+
         private async Task LoadIGDBGamesList(int startIndex)
         {
+            IsBusy = true;
+
             List<IGDBGame> resp = await IGDBGamesApiService.Get(SearchText, startIndex);
 
             DateTime? releaseDate = null;
@@ -74,7 +78,7 @@ namespace GamesCatalog.ViewModels.IGDBSearch
             {
                 if (item is null) continue;
 
-                if(item.first_release_date is not null)
+                if (item.first_release_date is not null)
                     releaseDate = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(item.first_release_date)).UtcDateTime;
                 else
                     releaseDate = null;
@@ -88,6 +92,8 @@ namespace GamesCatalog.ViewModels.IGDBSearch
                     Platforms = item.platforms?.Count > 0 ? string.Join(", ", item.platforms.Select(p => p.abbreviation)) : ""
                 });
             }
+
+            IsBusy = false;
         }
     }
 }
