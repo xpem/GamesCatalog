@@ -74,6 +74,9 @@
 	  <MauiXaml Update="Components\BorderedEntry.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AddGame.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\IGDBSearch\IGDBResults.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

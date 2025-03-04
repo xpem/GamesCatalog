@@ -11,5 +11,8 @@
         public string CoverUrl { get; set; }
 
         public string Platforms { get; set; }
+
+        public string Summary { get; set; }
+
     }
 }

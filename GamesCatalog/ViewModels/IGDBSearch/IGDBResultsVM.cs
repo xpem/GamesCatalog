@@ -89,7 +89,8 @@ namespace GamesCatalog.ViewModels.IGDBSearch
                     Name = item.name ?? "",
                     ReleaseDate = releaseDate?.Date.ToString("MM/yyyy") ?? "",
                     CoverUrl = item.cover?.id is not null ? $"https://images.igdb.com/igdb/image/upload/t_cover_big/{item.cover?.image_id}.jpg" : "",
-                    Platforms = item.platforms?.Count > 0 ? string.Join(", ", item.platforms.Select(p => p.abbreviation)) : ""
+                    Platforms = item.platforms?.Count > 0 ? string.Join(", ", item.platforms.Select(p => p.abbreviation)) : "",
+                    Summary = item.summary ?? ""
                 });
             }
 

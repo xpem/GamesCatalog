@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GamesCatalog.Views.AddGame"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
+    xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
+    x:DataType="vm:AddGameVM"
+    Style="{StaticResource ContentPage}">
+    <VerticalStackLayout>
+        <ScrollView>
+            <Border Style="{StaticResource BorderPrimary}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.ColumnSpan="2"
+                        Margin="0,0,0,10"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="{Binding Name}"
+                        TextColor="White" />
+                    <Image
+                        Grid.Row="1"
+                        Margin="0,0,0,5"
+                        Aspect="AspectFit"
+                        HeightRequest="320"
+                        Source="{Binding CoverUrl}" />
+                    <HorizontalStackLayout
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Padding="0,5,0,5"
+                        HorizontalOptions="Center">
+                        <Button
+                            Margin="0,0,10,0"
+                            BorderColor="{StaticResource SecondaryBorderColor}"
+                            ContentLayout="Top,0"
+                            HorizontalOptions="Start"
+                            Text="Want">
+                            <Button.ImageSource>
+                                <FontImageSource
+                                    FontFamily="FontAwesomeIcons"
+                                    Glyph="{x:Static Icons:IconFont.Clock}"
+                                    Size="30"
+                                    Color="White" />
+                            </Button.ImageSource>
+                        </Button>
+                        <Button
+                            BorderColor="{StaticResource SecondaryBorderColor}"
+                            ContentLayout="Top,0"
+                            HorizontalOptions="Start"
+                            Text="Playing">
+                            <Button.ImageSource>
+                                <FontImageSource
+                                    FontFamily="FontAwesomeIcons"
+                                    Glyph="{x:Static Icons:IconFont.Gamepad}"
+                                    Size="30"
+                                    Color="White" />
+                            </Button.ImageSource>
+                        </Button>
+                        <Button
+                            Margin="10,0,0,0"
+                            BorderColor="{StaticResource SecondaryBorderColor}"
+                            ContentLayout="Top,0"
+                            HorizontalOptions="Start"
+                            Text="Played">
+                            <Button.ImageSource>
+                                <FontImageSource
+                                    FontFamily="FontAwesomeIcons"
+                                    Glyph="{x:Static Icons:IconFont.CircleCheck}"
+                                    Size="30"
+                                    Color="White" />
+                            </Button.ImageSource>
+                        </Button>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout Grid.Row="3" Grid.Column="1">
+                        <Border
+                            Margin="0,0,0,5"
+                            Padding="10"
+                            Background="Transparent"
+                            Stroke="{StaticResource SecondaryBorderColor}"
+                            StrokeShape="RoundRectangle 10">
+                            <Label
+                                Padding="0,0,0,5"
+                                FontAttributes="Italic"
+                                FontSize="12"
+                                Text="{Binding Summary}"
+                                TextColor="{StaticResource SecondaryLabelColor}" />
+                        </Border>
+                        <Label
+                            Padding="0,0,0,5"
+                            FontSize="15"
+                            Text="{Binding ReleaseDate, StringFormat='Release: {0:F0}'}"
+                            TextColor="{StaticResource SecondaryLabelColor}" />
+                        <Label
+                            Padding="0,0,0,5"
+                            FontSize="15"
+                            Text="{Binding Platforms, StringFormat='Platforms: {0:F0}'}"
+                            TextColor="{StaticResource SecondaryLabelColor}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </ScrollView>
+    </VerticalStackLayout>
+</ContentPage>

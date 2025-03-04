@@ -11,6 +11,8 @@
     <Color x:Key="ActiveColor">#92CBFF</Color>
     <Color x:Key="lightGray">#E1E1E1</Color>
     <Color x:Key="Gray">#ACACAC</Color>
+    <Color x:Key="SecondaryLabelColor">#98BDD3</Color>
+    <Color x:Key="SecondaryBorderColor">#2B659B</Color>
 </ResourceDictionary>
 
 

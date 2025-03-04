@@ -14,9 +14,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border
-            Padding="10,0,10,5"
-            Style="{StaticResource BorderPrimary}">
+        <Border Padding="10,0,10,5" Style="{StaticResource BorderPrimary}">
             <components:BorderedEntry
                 LabelText="Search"
                 MaxLength="100"
@@ -30,6 +28,7 @@
             <ListView
                 CachingStrategy="RecycleElement"
                 HasUnevenRows="True"
+                ItemTapped="ListView_ItemTapped"
                 ItemsSource="{Binding ListGames}"
                 SelectionMode="None">
                 <ListView.Behaviors>
@@ -60,7 +59,8 @@
                                         <Label
                                             FontSize="Large"
                                             LineBreakMode="TailTruncation"
-                                            Text="{Binding Name}" />
+                                            Text="{Binding Name}"
+                                            TextColor="White" />
                                         <Label
                                             FontAttributes="Italic"
                                             FontSize="Micro"

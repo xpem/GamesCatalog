@@ -11,6 +11,8 @@
         public string first_release_date { get; set; }
 
         public List<Platform> platforms { get; set; }
+
+        public string summary { get; set; }
     }
 
     public record Cover

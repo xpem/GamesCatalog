@@ -20,6 +20,7 @@ namespace GamesCatalog
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Free-Solid-900.otf", "FontAwesomeIcons");
                 });
 
 #if DEBUG
@@ -27,6 +28,8 @@ namespace GamesCatalog
 #endif
 
             builder.Services.AddTransientWithShellRoute<IGDBResults, IGDBResultsVM>(nameof(IGDBResults));
+            builder.Services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
+
 
             return builder.Build();
         }

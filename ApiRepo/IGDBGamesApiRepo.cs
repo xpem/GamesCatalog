@@ -15,7 +15,7 @@ namespace ApiRepo
                 httpClient.DefaultRequestHeaders.Add("Client-ID", ApiKeys.CLIENTID);
                 httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKeys.TOKENTEMP}");
 
-                var bodyContent = new StringContent($"fields cover,cover.url,cover.image_id,first_release_date,name,platforms.abbreviation;search \"{search}\"; limit 20; offset {startIndex};", Encoding.UTF8, "application/json");
+                var bodyContent = new StringContent($"fields cover,cover.url,cover.image_id,first_release_date,name,platforms.abbreviation,summary;search \"{search}\"; limit 20; offset {startIndex};", Encoding.UTF8, "application/json");
 
                 HttpResponseMessage httpResponse = await httpClient.PostAsync("https://api.igdb.com/v4/games", bodyContent);
 
