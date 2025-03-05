@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace GamesCatalog.ViewModels
 {
@@ -12,7 +13,46 @@ namespace GamesCatalog.ViewModels
     {
         private UIIGDBGame Game { get; set; }
 
-        public string Id = "", name = "", releaseDate = "", coverUrl = "", platforms = "", summary = "";      
+        public string Id = "", name = "", releaseDate = "", coverUrl = "", platforms = "", summary = "";
+
+        private bool confirmIsVisible = false;
+
+        static readonly Color BgButtonStatusSelectedColor = Color.FromArgb("#2b9b74");
+        static readonly Color BgButtonStatusNormalColor = Color.FromArgb("#2B659B");
+
+        private enum GameStatus
+        {
+            Want,
+            Playing,
+            Played
+        }
+
+        private GameStatus? GameSelectedStatus = null;
+
+        private Color wantBgColor = BgButtonStatusNormalColor, playingBgColor = BgButtonStatusNormalColor, playedBgColor = BgButtonStatusNormalColor;
+
+        public Color WantBgColor
+        {
+            get => wantBgColor;
+            set => SetProperty(ref wantBgColor, value);
+        }
+
+        public Color PlayingBgColor
+        {
+            get => playingBgColor;
+            set => SetProperty(ref playingBgColor, value);
+        }
+
+        public Color PlayedBgColor
+        {
+            get => playedBgColor;
+            set => SetProperty(ref playedBgColor, value);
+        }
+        public bool ConfirmIsVisible
+        {
+            get => confirmIsVisible;
+            set => SetProperty(ref confirmIsVisible, value);
+        }
 
         public string Name
         {
@@ -64,5 +104,42 @@ namespace GamesCatalog.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        private Task Want()
+        {
+            GameSelectedStatus = GameStatus.Want;
+            WantBgColor = BgButtonStatusSelectedColor;
+            PlayingBgColor = BgButtonStatusNormalColor;
+            PlayedBgColor = BgButtonStatusNormalColor;
+            ConfirmIsVisible = true;
+
+            return Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        private Task Playing()
+        {
+            GameSelectedStatus = GameStatus.Playing;
+            WantBgColor = BgButtonStatusNormalColor;
+            PlayingBgColor = BgButtonStatusSelectedColor;
+            PlayedBgColor = BgButtonStatusNormalColor;
+            ConfirmIsVisible = true;
+
+            return Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        private Task Played()
+        {
+            GameSelectedStatus = GameStatus.Played;
+            WantBgColor = BgButtonStatusNormalColor;
+            PlayingBgColor = BgButtonStatusNormalColor;
+            PlayedBgColor = BgButtonStatusSelectedColor;
+            ConfirmIsVisible = false;
+
+            return Task.CompletedTask;
+        }
+
     }
 }

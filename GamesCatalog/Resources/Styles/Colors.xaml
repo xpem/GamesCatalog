@@ -11,8 +11,12 @@
     <Color x:Key="ActiveColor">#92CBFF</Color>
     <Color x:Key="lightGray">#E1E1E1</Color>
     <Color x:Key="Gray">#ACACAC</Color>
+
+    <Color x:Key="PrimaryElementColor">#4DACFF</Color>
+    <Color x:Key="SecondaryElementColor">#2B659B</Color>
     <Color x:Key="SecondaryLabelColor">#98BDD3</Color>
-    <Color x:Key="SecondaryBorderColor">#2B659B</Color>
+    <Color x:Key="Success">#2b9b74</Color>
+
 </ResourceDictionary>
 
 

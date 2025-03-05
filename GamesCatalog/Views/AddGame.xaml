@@ -34,59 +34,79 @@
                         Aspect="AspectFit"
                         HeightRequest="320"
                         Source="{Binding CoverUrl}" />
-                    <HorizontalStackLayout
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Padding="0,5,0,5"
-                        HorizontalOptions="Center">
+                    <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+                        <HorizontalStackLayout Padding="0,5,0,5" HorizontalOptions="Center">
+                            <Button
+                                Margin="0,0,10,0"
+                                BackgroundColor="{Binding WantBgColor}"
+                                Command="{Binding WantCommand}"
+                                ContentLayout="Top,0"
+                                HorizontalOptions="Start"
+                                Text="Want"
+                                WidthRequest="70">
+                                <Button.ImageSource>
+                                    <FontImageSource
+                                        FontFamily="FontAwesomeIcons"
+                                        Glyph="{x:Static Icons:IconFont.Clock}"
+                                        Size="30"
+                                        Color="White" />
+                                </Button.ImageSource>
+                            </Button>
+                            <Button
+                                BackgroundColor="{Binding PlayingBgColor}"
+                                Command="{Binding PlayingCommand}"
+                                ContentLayout="Top,0"
+                                HorizontalOptions="Start"
+                                Text="Playing"
+                                WidthRequest="70">
+                                <Button.ImageSource>
+                                    <FontImageSource
+                                        FontFamily="FontAwesomeIcons"
+                                        Glyph="{x:Static Icons:IconFont.Gamepad}"
+                                        Size="30"
+                                        Color="White" />
+                                </Button.ImageSource>
+                            </Button>
+                            <Button
+                                Margin="10,0,0,0"
+                                BackgroundColor="{Binding PlayedBgColor}"
+                                Command="{Binding PlayedCommand}"
+                                ContentLayout="Top,0"
+                                HorizontalOptions="Start"
+                                Text="Played"
+                                WidthRequest="70">
+                                <Button.ImageSource>
+                                    <FontImageSource
+                                        FontFamily="FontAwesomeIcons"
+                                        Glyph="{x:Static Icons:IconFont.CircleCheck}"
+                                        Size="30"
+                                        Color="White" />
+                                </Button.ImageSource>
+                            </Button>
+                        </HorizontalStackLayout>
                         <Button
-                            Margin="0,0,10,0"
-                            BorderColor="{StaticResource SecondaryBorderColor}"
-                            ContentLayout="Top,0"
-                            HorizontalOptions="Start"
-                            Text="Want">
+                            Margin="0,10,0,10"
+                            BackgroundColor="{StaticResource Success}"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding ConfirmIsVisible}"
+                            Text="Confirm">
                             <Button.ImageSource>
                                 <FontImageSource
                                     FontFamily="FontAwesomeIcons"
-                                    Glyph="{x:Static Icons:IconFont.Clock}"
+                                    Glyph="{x:Static Icons:IconFont.Check}"
                                     Size="30"
                                     Color="White" />
                             </Button.ImageSource>
                         </Button>
-                        <Button
-                            BorderColor="{StaticResource SecondaryBorderColor}"
-                            ContentLayout="Top,0"
-                            HorizontalOptions="Start"
-                            Text="Playing">
-                            <Button.ImageSource>
-                                <FontImageSource
-                                    FontFamily="FontAwesomeIcons"
-                                    Glyph="{x:Static Icons:IconFont.Gamepad}"
-                                    Size="30"
-                                    Color="White" />
-                            </Button.ImageSource>
-                        </Button>
-                        <Button
-                            Margin="10,0,0,0"
-                            BorderColor="{StaticResource SecondaryBorderColor}"
-                            ContentLayout="Top,0"
-                            HorizontalOptions="Start"
-                            Text="Played">
-                            <Button.ImageSource>
-                                <FontImageSource
-                                    FontFamily="FontAwesomeIcons"
-                                    Glyph="{x:Static Icons:IconFont.CircleCheck}"
-                                    Size="30"
-                                    Color="White" />
-                            </Button.ImageSource>
-                        </Button>
-                    </HorizontalStackLayout>
+                    </VerticalStackLayout>
                     <VerticalStackLayout Grid.Row="3" Grid.Column="1">
                         <Border
                             Margin="0,0,0,5"
                             Padding="10"
                             Background="Transparent"
-                            Stroke="{StaticResource SecondaryBorderColor}"
+                            Stroke="{StaticResource SecondaryElementColor}"
                             StrokeShape="RoundRectangle 10">
                             <Label
                                 Padding="0,0,0,5"
