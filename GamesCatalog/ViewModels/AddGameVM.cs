@@ -1,11 +1,5 @@
-﻿using GamesCatalog.Models.IGDBApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using GamesCatalog.Models.IGDBApi;
 
 namespace GamesCatalog.ViewModels
 {
@@ -84,7 +78,29 @@ namespace GamesCatalog.ViewModels
             set => SetProperty(ref summary, value);
         }
 
-        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        private int? rate = 0;
+
+        public int? Rate
+        {
+            get => rate;
+            set
+            {
+                if (RatingBarIsVisible)
+                    ConfirmIsVisible = true;
+
+                SetProperty(ref rate, value);
+            }
+        }
+
+        private bool ratingBarIsVisible = false;
+
+        public bool RatingBarIsVisible
+        {
+            get => ratingBarIsVisible;
+            set => SetProperty(ref ratingBarIsVisible, value);
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query is not null)
             {
@@ -113,7 +129,8 @@ namespace GamesCatalog.ViewModels
             PlayingBgColor = BgButtonStatusNormalColor;
             PlayedBgColor = BgButtonStatusNormalColor;
             ConfirmIsVisible = true;
-
+            RatingBarIsVisible = false;
+            Rate = 0;
             return Task.CompletedTask;
         }
 
@@ -125,7 +142,8 @@ namespace GamesCatalog.ViewModels
             PlayingBgColor = BgButtonStatusSelectedColor;
             PlayedBgColor = BgButtonStatusNormalColor;
             ConfirmIsVisible = true;
-
+            RatingBarIsVisible = false;
+            Rate = 0;
             return Task.CompletedTask;
         }
 
@@ -137,6 +155,8 @@ namespace GamesCatalog.ViewModels
             PlayingBgColor = BgButtonStatusNormalColor;
             PlayedBgColor = BgButtonStatusSelectedColor;
             ConfirmIsVisible = false;
+            Rate = 0;
+            RatingBarIsVisible = true;
 
             return Task.CompletedTask;
         }

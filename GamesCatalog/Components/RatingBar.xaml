@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<VerticalStackLayout
+    x:Class="GamesCatalog.Components.RatingBar"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
+    x:Name="this">
+    <Label IsVisible="false" Text="{Binding Source={x:Reference this}, Path=Rate}" />
+    <Grid Margin="0,10,0,10" HorizontalOptions="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Label
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star1Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star1Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="1"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star2Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star2Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="2"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star3Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star3Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="3"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star4Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star4Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="4"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star5Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star5Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="5"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star6Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star6Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="6"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star7Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star7Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="7"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star8Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star8Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="8"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star9Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star9Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Column="9"
+            Margin="0,0,3,0"
+            FontFamily="FontAwesomeIcons"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{x:Static Icons:IconFont.Star}"
+            TextColor="{Binding Source={x:Reference this}, Path=Star10Color}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Star10Command}" CommandParameter="1" />
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+</VerticalStackLayout>
