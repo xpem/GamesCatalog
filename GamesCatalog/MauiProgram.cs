@@ -3,7 +3,10 @@ using GamesCatalog.ViewModels;
 using GamesCatalog.ViewModels.IGDBSearch;
 using GamesCatalog.Views;
 using GamesCatalog.Views.IGDBSearch;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Repo;
+using Services;
 
 namespace GamesCatalog
 {
@@ -24,14 +27,25 @@ namespace GamesCatalog
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             builder.Services.AddTransientWithShellRoute<IGDBResults, IGDBResultsVM>(nameof(IGDBResults));
             builder.Services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
 
+            builder.Services.AddDbContextFactory<DbCtx>(options =>
+            options.UseSqlite($"Filename={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GamesCatalog.db")}")
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+
+            builder.Services.Services();
 
             return builder.Build();
+        }
+
+        public static IServiceCollection Services(this IServiceCollection services)
+        {
+            services.AddScoped<IBuildDbService, BuildDbService>();
+            return services;
         }
     }
 }

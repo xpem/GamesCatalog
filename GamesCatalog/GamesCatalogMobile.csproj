@@ -62,11 +62,13 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Repo\Repo.csproj" />
 	  <ProjectReference Include="..\Services\Services.csproj" />
 	</ItemGroup>
 
