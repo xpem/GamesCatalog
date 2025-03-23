@@ -17,5 +17,12 @@ namespace Services
 
             return new ServiceResp(true);
         }
+
+        public async Task<GameDTO?> GetByIGDBIdAsync(int igdbId) =>
+             await GameRepo.GetByIGDBIdAsync(igdbId);
+
+        public async Task UpdateStatusAsync(int id, GameStatus gameStatus, int? rate) =>
+            await GameRepo.UpdateStatusAsync(id, DateTime.Now, gameStatus, rate);
+
     }
 }

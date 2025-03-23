@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models.IGDBApi;
 using Models.DTOs;
 using Services;
@@ -9,7 +11,8 @@ namespace GamesCatalog.ViewModels
     {
         private UIIGDBGame Game { get; set; }
 
-        public string Id = "", name = "", releaseDate = "", coverUrl = "", platforms = "", summary = "";
+        public string IgdbId = "", name = "", releaseDate = "", coverUrl = "", platforms = "", summary = "";
+        public int? Id;
 
         private bool confirmIsVisible = false;
 
@@ -105,22 +108,40 @@ namespace GamesCatalog.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query is not null)
+            if (query is not null && query.TryGetValue("Game", out object? game))
             {
-                if (query.TryGetValue("Game", out object? game))
+                if (game is not null and UIIGDBGame uiGame)
                 {
-                    if (game is not null and UIIGDBGame uiGame)
-                    {
-                        Game = uiGame;
+                    Game = uiGame;
 
-                        Id = Game.Id;
-                        Name = Game.Name;
-                        ReleaseDate = Game.ReleaseDate;
-                        CoverUrl = Game.CoverUrl;
-                        Platforms = Game.Platforms;
-                        Summary = Game.Summary;
-                    }
+                    IgdbId = Game.Id;
+                    Name = Game.Name;
+                    ReleaseDate = Game.ReleaseDate;
+                    CoverUrl = Game.CoverUrl;
+                    Platforms = Game.Platforms;
+                    Summary = Game.Summary;
+
+                    _ = BuildGameStatus();
                 }
+            }
+        }
+
+        public async Task BuildGameStatus()
+        {
+            var gameDTO = await gameService.GetByIGDBIdAsync(int.Parse(IgdbId));
+
+            if (gameDTO is null) return;
+
+            Id = gameDTO.Id;
+
+            switch (gameDTO.Status)
+            {
+                case GameStatus.Want: _ = Want(); break;
+                case GameStatus.Playing: _ = Playing(); break;
+                case GameStatus.Played:
+                    _ = Played();
+                    Rate = gameDTO.Rate;
+                    break;
             }
         }
 
@@ -170,19 +191,18 @@ namespace GamesCatalog.ViewModels
             // Disable button to avoid multiple requests
             ConfirmIsEnabled = false;
 
-            string displayMessage = "";
+            int? _rate = null;
+            string displayMessage;
 
             // If the game is played, the rate is required
-            int? _rate = null;
+            if (GameSelectedStatus == GameStatus.Played)
+                _rate = Rate;
 
-            try
+            if (Id is null)
             {
-                if (GameSelectedStatus == GameStatus.Played)
-                    _rate = Rate;
-
                 GameDTO game = new()
                 {
-                    IGDBId = int.Parse(Id),
+                    IGDBId = int.Parse(IgdbId),
                     Name = Name,
                     ReleaseDate = ReleaseDate,
                     CoverUrl = CoverUrl,
@@ -194,24 +214,28 @@ namespace GamesCatalog.ViewModels
 
                 await gameService.CreateAsync(game);
 
-                await Shell.Current.GoToAsync("..");
-
-                ConfirmIsEnabled = true;
+                displayMessage = "Status Added!";
             }
-            // If the game is already added, display an error message for now
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            else
             {
-                bool displayResp = await Application.Current.Windows[0].Page.DisplayAlert("Error", "Game already added!", null, "Ok");
+                await gameService.UpdateStatusAsync(Id.Value, GameSelectedStatus.Value, _rate);
 
-                if (!displayResp)
-                    await Shell.Current.GoToAsync("..");
-
-                ConfirmIsEnabled = true;
+                displayMessage = "Status Updated!";
             }
-            catch (Exception)
+
+            if (DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android)
             {
-                throw;
+                ToastDuration duration = ToastDuration.Short;
+
+                var toast = Toast.Make(displayMessage, duration, 15);
+                await toast.Show();
             }
+            else
+                await Application.Current.Windows[0].Page.DisplayAlert("Success", displayMessage, null, "Ok");
+
+            await Shell.Current.GoToAsync("..");
+
+            ConfirmIsEnabled = true;
         }
     }
 }
