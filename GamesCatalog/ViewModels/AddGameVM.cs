@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models.IGDBApi;
+using Models.DTOs;
+using Services;
 
 namespace GamesCatalog.ViewModels
 {
-    public partial class AddGameVM : ViewModelBase, IQueryAttributable
+    public partial class AddGameVM(IGameService gameService) : ViewModelBase, IQueryAttributable
     {
         private UIIGDBGame Game { get; set; }
 
@@ -13,13 +15,6 @@ namespace GamesCatalog.ViewModels
 
         static readonly Color BgButtonStatusSelectedColor = Color.FromArgb("#2b9b74");
         static readonly Color BgButtonStatusNormalColor = Color.FromArgb("#2B659B");
-
-        private enum GameStatus
-        {
-            Want,
-            Playing,
-            Played
-        }
 
         private GameStatus? GameSelectedStatus = null;
 
@@ -46,6 +41,14 @@ namespace GamesCatalog.ViewModels
         {
             get => confirmIsVisible;
             set => SetProperty(ref confirmIsVisible, value);
+        }
+
+        private bool confirmIsEnabled = true;
+
+        public bool ConfirmIsEnabled
+        {
+            get => confirmIsEnabled;
+            set => SetProperty(ref confirmIsEnabled, value);
         }
 
         public string Name
@@ -161,5 +164,54 @@ namespace GamesCatalog.ViewModels
             return Task.CompletedTask;
         }
 
+        [RelayCommand]
+        public async Task Confirm()
+        {
+            // Disable button to avoid multiple requests
+            ConfirmIsEnabled = false;
+
+            string displayMessage = "";
+
+            // If the game is played, the rate is required
+            int? _rate = null;
+
+            try
+            {
+                if (GameSelectedStatus == GameStatus.Played)
+                    _rate = Rate;
+
+                GameDTO game = new()
+                {
+                    IGDBId = int.Parse(Id),
+                    Name = Name,
+                    ReleaseDate = ReleaseDate,
+                    CoverUrl = CoverUrl,
+                    Platforms = Platforms,
+                    Summary = Summary,
+                    Status = GameSelectedStatus.Value,
+                    Rate = _rate,
+                };
+
+                await gameService.CreateAsync(game);
+
+                await Shell.Current.GoToAsync("..");
+
+                ConfirmIsEnabled = true;
+            }
+            // If the game is already added, display an error message for now
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            {
+                bool displayResp = await Application.Current.Windows[0].Page.DisplayAlert("Error", "Game already added!", null, "Ok");
+
+                if (!displayResp)
+                    await Shell.Current.GoToAsync("..");
+
+                ConfirmIsEnabled = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

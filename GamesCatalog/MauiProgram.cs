@@ -38,13 +38,21 @@ namespace GamesCatalog
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             builder.Services.Services();
+            builder.Services.Repositories();
 
             return builder.Build();
+        }
+
+        public static IServiceCollection Repositories(this IServiceCollection services)
+        {
+            services.AddScoped<IGameRepo, GameRepo>();
+            return services;
         }
 
         public static IServiceCollection Services(this IServiceCollection services)
         {
             services.AddScoped<IBuildDbService, BuildDbService>();
+            services.AddScoped<IGameService, GameService>();
             return services;
         }
     }

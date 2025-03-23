@@ -36,10 +36,12 @@ namespace GamesCatalog.ViewModels.IGDBSearch
             set => SetProperty(ref listGames, value);
         }
 
+        private string CacheSearchText = "";
+
         private async Task SearchGamesList()
-        { 
-            if (Searching)
-                return;
+        {
+            if (Searching) 
+                return;                
 
             if (SearchText.Length < 3) return;
 
@@ -88,9 +90,9 @@ namespace GamesCatalog.ViewModels.IGDBSearch
                     Id = item.id,
                     Name = item.name ?? "",
                     ReleaseDate = releaseDate?.Date.ToString("MM/yyyy") ?? "",
-                    CoverUrl = item.cover?.id is not null ? $"https://images.igdb.com/igdb/image/upload/t_cover_big/{item.cover?.image_id}.jpg" : "",
+                    CoverUrl = item.cover?.image_id is not null ? $"https://images.igdb.com/igdb/image/upload/t_cover_big/{item.cover?.image_id}.jpg" : "",
                     Platforms = item.platforms?.Count > 0 ? string.Join(", ", item.platforms.Select(p => p.abbreviation)) : "",
-                    Summary = item.summary ?? ""
+                    Summary = item.summary ?? "",
                 });
             }
 

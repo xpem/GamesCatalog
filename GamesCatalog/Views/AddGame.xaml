@@ -101,6 +101,7 @@
                         <Button
                             Margin="0,10,0,10"
                             BackgroundColor="{StaticResource Success}"
+                            Command="{Binding ConfirmCommand}"
                             FontAttributes="Bold"
                             FontSize="20"
                             HorizontalOptions="Center"

@@ -13,7 +13,7 @@ namespace Services
 
             VersionDbTables? actualVesionDbTables = context.VersionDbTables.FirstOrDefault();
 
-            VersionDbTables newVersionDbTables = new() { Id = 0, Version = 0 };
+            VersionDbTables newVersionDbTables = new() { Id = 0, Version = 2 };
 
             if (actualVesionDbTables != null)
             {
@@ -31,6 +31,9 @@ namespace Services
             }
             else
             {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
                 context.VersionDbTables.Add(newVersionDbTables);
 
                 context.SaveChanges();
