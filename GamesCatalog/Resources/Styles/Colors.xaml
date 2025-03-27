@@ -16,6 +16,7 @@
     <Color x:Key="SecondaryElementColor">#2B659B</Color>
     <Color x:Key="SecondaryLabelColor">#98BDD3</Color>
     <Color x:Key="Success">#2b9b74</Color>
+    <Color x:Key="SecondaryBGColor">#101923</Color>
 
 </ResourceDictionary>
 

@@ -7,7 +7,6 @@
     xmlns:components="clr-namespace:GamesCatalog.Components"
     xmlns:model="clr-namespace:GamesCatalog.Models.IGDBApi"
     xmlns:vm="clr-namespace:GamesCatalog.ViewModels.IGDBSearch"
-    Title="IGDBResults"
     x:DataType="vm:IGDBResultsVM">
     <Grid>
         <Grid.RowDefinitions>
@@ -51,7 +50,7 @@
                                     <Image
                                         Grid.Column="0"
                                         Aspect="AspectFit"
-                                        HeightRequest="100"
+                                        HeightRequest="150"
                                         Source="{Binding CoverUrl}"
                                         VerticalOptions="Center"
                                         WidthRequest="150" />

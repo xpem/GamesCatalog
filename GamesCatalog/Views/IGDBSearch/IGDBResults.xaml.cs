@@ -21,4 +21,9 @@ public partial class IGDBResults : ContentPage
                 { "Game", tappedItem }
             });
     }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync($"{nameof(MainPage)}", true);
+    }
 }

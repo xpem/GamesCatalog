@@ -1,5 +1,6 @@
 ﻿using Models.Resps;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 
 namespace ApiRepo
@@ -27,6 +28,24 @@ namespace ApiRepo
                 };
             }
             catch { throw; }
+        }
+
+        public static async Task<byte[]> GetGameImageAsByteArrayAsync(string imageUrl)
+        {
+            try
+            {
+                HttpClient httpClient = new();
+
+                var response = await httpClient.GetAsync(imageUrl);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception($"Exception downloading image url:{imageUrl}");
+
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

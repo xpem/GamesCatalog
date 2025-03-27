@@ -32,6 +32,7 @@ namespace GamesCatalog
 
             builder.Services.AddTransientWithShellRoute<IGDBResults, IGDBResultsVM>(nameof(IGDBResults));
             builder.Services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
+            builder.Services.AddTransientWithShellRoute<Main, MainVM>(nameof(Main));
 
             builder.Services.AddDbContextFactory<DbCtx>(options =>
             options.UseSqlite($"Filename={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GamesCatalog.db")}")

@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models.IGDBApi;
 using Models.Resps;
-using Services.Games;
+using Services;
 using System.Collections.ObjectModel;
 
 namespace GamesCatalog.ViewModels.IGDBSearch
@@ -11,9 +11,9 @@ namespace GamesCatalog.ViewModels.IGDBSearch
     {
         private ObservableCollection<UIIGDBGame> listGames = [];
 
-        private bool Searching { get; set; }
+        //private bool Searching { get; set; }
 
-        string searchText;
+        string searchText = "";
 
         public string SearchText
         {
@@ -36,64 +36,82 @@ namespace GamesCatalog.ViewModels.IGDBSearch
             set => SetProperty(ref listGames, value);
         }
 
-        private string CacheSearchText = "";
+        private readonly SemaphoreSlim searchSemaphore = new(1, 1);
+        private DateTime lastSearchTime = DateTime.MinValue;
+        private CancellationTokenSource? searchDelayTokenSource;
 
         private async Task SearchGamesList()
         {
-            if (Searching) 
-                return;                
+            if (SearchText.Length < 3)
+                return;
 
-            if (SearchText.Length < 3) return;
+            searchDelayTokenSource?.Cancel();
+            searchDelayTokenSource = new CancellationTokenSource();
+            var token = searchDelayTokenSource.Token;
 
-            Searching = true;
+            await Task.Delay(1500, token);
 
-            while (Searching)
+            if (!token.IsCancellationRequested) // Só executa se não foi cancelado
             {
-                await Task.Delay(2500);
+                lastSearchTime = DateTime.UtcNow;
 
                 if (ListGames.Count > 0)
                     ListGames.Clear();
 
                 CurrentPage = 0;
                 await LoadIGDBGamesList(CurrentPage);
-
-                Searching = false;
             }
         }
 
         [RelayCommand]
-        public Task LoadMore()
+        public async Task LoadMore()
         {
+            if (CurrentPage < 0) return;
+
             CurrentPage++;
-            return LoadIGDBGamesList(CurrentPage);
+            await LoadIGDBGamesList(CurrentPage);
         }
+
 
         private async Task LoadIGDBGamesList(int startIndex)
         {
             IsBusy = true;
 
-            List<IGDBGame> resp = await IGDBGamesApiService.Get(SearchText, startIndex);
+            await searchSemaphore.WaitAsync();
 
-            DateTime? releaseDate = null;
-
-            foreach (var item in resp)
+            try
             {
-                if (item is null) continue;
+                List<IGDBGame> resp = await IGDBGamesApiService.Get(SearchText, startIndex);
 
-                if (item.first_release_date is not null)
-                    releaseDate = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(item.first_release_date)).UtcDateTime;
-                else
-                    releaseDate = null;
+                DateTime? releaseDate = null;
 
-                ListGames.Add(new UIIGDBGame
+                if (resp.Count < 20) { 
+                    CurrentPage--; 
+                }
+
+                foreach (var item in resp)
                 {
-                    Id = item.id,
-                    Name = item.name ?? "",
-                    ReleaseDate = releaseDate?.Date.ToString("MM/yyyy") ?? "",
-                    CoverUrl = item.cover?.image_id is not null ? $"https://images.igdb.com/igdb/image/upload/t_cover_big/{item.cover?.image_id}.jpg" : "",
-                    Platforms = item.platforms?.Count > 0 ? string.Join(", ", item.platforms.Select(p => p.abbreviation)) : "",
-                    Summary = item.summary ?? "",
-                });
+                    if (item is null) continue;
+
+                    if (item.first_release_date is not null)
+                        releaseDate = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(item.first_release_date)).UtcDateTime;
+                    else
+                        releaseDate = null;
+
+                    ListGames.Add(new UIIGDBGame
+                    {
+                        Id = item.id,
+                        Name = item.name ?? "",
+                        ReleaseDate = releaseDate?.Date.ToString("MM/yyyy") ?? "",
+                        CoverUrl = item.cover?.image_id is not null ? $"https://images.igdb.com/igdb/image/upload/t_cover_big/{item.cover?.image_id}.jpg" : "",
+                        Platforms = item.platforms?.Count > 0 ? string.Join(", ", item.platforms.Select(p => p.abbreviation)) : "",
+                        Summary = item.summary ?? "",
+                    });
+                }
+            }
+            finally
+            {
+                searchSemaphore.Release();
             }
 
             IsBusy = false;

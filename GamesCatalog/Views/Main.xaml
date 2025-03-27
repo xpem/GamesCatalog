@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GamesCatalog.Views.Main"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
+    x:Name="this"
+    x:DataType="vm:MainVM"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            BindingContext="{Binding BindingContext, Source={x:Reference this}, x:DataType=MainVM}"
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <Style x:Key="BtnAddGame" TargetType="Button">
+            <Setter Property="Margin" Value="0,0,30,30" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Success}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalOptions" Value="End" />
+            <Setter Property="VerticalOptions" Value="End" />
+        </Style>
+
+
+
+
+        <Style x:Key="BorderCardItem" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondaryBGColor}" />
+            <Setter Property="Stroke" Value="{StaticResource ActiveColor}" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style x:Key="GridCardItem" TargetType="Grid">
+            <Setter Property="VerticalOptions" Value="Start" />
+            <Setter Property="HorizontalOptions" Value="Fill" />
+        </Style>
+        <Style x:Key="LblCardImgIcon" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="FontSize" Value="50" />
+            <Setter Property="Margin" Value="5,5,0,10" />
+            <Setter Property="FontFamily" Value="FontAwesomeIcons" />
+            <Setter Property="TextColor" Value="{StaticResource White}" />
+        </Style>
+        <Style x:Key="LblImgIcon" TargetType="Label">
+            <Setter Property="FontFamily" Value="FontAwesomeIcons" />
+            <Setter Property="TextColor" Value="{StaticResource White}" />
+        </Style>
+        <Style x:Key="LblQuantity" TargetType="Label">
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="70" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="TextColor" Value="{StaticResource White}" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="Padding" Value="0,0,0,0" />
+        </Style>
+        <Style x:Key="ImgAngleRight" TargetType="Label">
+            <Setter Property="FontFamily" Value="FontAwesomeIcons" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="40" />
+            <Setter Property="TextColor" Value="{StaticResource White}" />
+            <Setter Property="HorizontalOptions" Value="End" />
+            <Setter Property="Text" Value="{x:Static Icons:IconFont.AngleRight}" />
+        </Style>
+        <Style x:Key="LblText" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource White}" />
+            <Setter Property="VerticalOptions" Value="End" />
+            <Setter Property="VerticalTextAlignment" Value="End" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Margin" Value="5,0,0,0" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid x:Name="PageGrid" VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ScrollView>
+            <Grid x:Name="BodyGrid" VerticalOptions="Fill">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <VerticalStackLayout Margin="5" VerticalOptions="Fill">
+                    <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
+                        <Grid
+                            RowDefinitions="*,*"
+                            RowSpacing="5"
+                            Style="{StaticResource GridCardItem}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <CollectionView
+                                Margin="0"
+                                FlowDirection="RightToLeft"
+                                HorizontalOptions="Start"
+                                ItemsLayout="HorizontalList"
+                                ItemsSource="{Binding Imagens2}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:ImageT2">
+                                        <AbsoluteLayout
+                                            Margin="0"
+                                            Padding="0"
+                                            IsClippedToBounds="False">
+                                            <Image
+                                                Margin="{Binding margin}"
+                                                Aspect="Fill"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="136"
+                                                Source="{Binding url}"
+                                                WidthRequest="100" />
+                                        </AbsoluteLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <Label
+                                Grid.Row="1"
+                                Margin="0,0,0,0"
+                                FontSize="40"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource LblImgIcon}"
+                                Text="{x:Static Icons:IconFont.Clock}"
+                                VerticalOptions="End" />
+                            <Label
+                                Grid.Row="1"
+                                FontSize="20"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LblText}"
+                                Text="15 playing"
+                                VerticalOptions="Center" />
+                            <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
+                        </Grid>
+                    </Border>
+                    <!-- <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
+                        <Grid
+                            RowDefinitions="*,*"
+                            RowSpacing="5"
+                            Style="{StaticResource GridCardItem}">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <CollectionView
+                                Margin="0"
+                                FlowDirection="RightToLeft"
+                                HorizontalOptions="Start"
+                                ItemsLayout="HorizontalList"
+                                ItemsSource="{Binding Imagens2}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:ImageT2">
+                                        <AbsoluteLayout
+                                            Margin="0"
+                                            Padding="0"
+                                            IsClippedToBounds="False">
+                                            <Image
+                                                Margin="{Binding margin}"
+                                                Aspect="Fill"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="136"
+                                                Source="{Binding url}"
+                                                WidthRequest="100" />
+                                        </AbsoluteLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <Label
+                                Grid.Row="1"
+                                Margin="0,0,0,0"
+                                FontSize="40"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource LblImgIcon}"
+                                Text="{x:Static Icons:IconFont.Gamepad}"
+                                VerticalOptions="End" />
+                            <Label
+                                Grid.Row="1"
+                                FontSize="20"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LblText}"
+                                Text="15 playing"
+                                VerticalOptions="Center" />
+                            <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
+                        </Grid>
+                    </Border>
+                    <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
+                        <Grid
+                            RowDefinitions="*,*"
+                            RowSpacing="5"
+                            Style="{StaticResource GridCardItem}">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <CollectionView
+                                Margin="0"
+                                FlowDirection="RightToLeft"
+                                HorizontalOptions="Start"
+                                ItemsLayout="HorizontalList"
+                                ItemsSource="{Binding Imagens2}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:ImageT2">
+                                        <AbsoluteLayout
+                                            Margin="0"
+                                            Padding="0"
+                                            IsClippedToBounds="False">
+                                            <Image
+                                                Margin="{Binding margin}"
+                                                Aspect="Fill"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="136"
+                                                Source="{Binding url}"
+                                                WidthRequest="100" />
+                                        </AbsoluteLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <Label
+                                Grid.Row="1"
+                                Margin="0,0,0,0"
+                                FontSize="40"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource LblImgIcon}"
+                                Text="{x:Static Icons:IconFont.Check}"
+                                VerticalOptions="End" />
+                            <Label
+                                Grid.Row="1"
+                                FontSize="20"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LblText}"
+                                Text="15 playing"
+                                VerticalOptions="Center" />
+                            <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
+                        </Grid>
+                    </Border>-->
+                </VerticalStackLayout>
+                <HorizontalStackLayout
+                    x:Name="BodyGrid_Footer"
+                    Grid.Row="1"
+                    HorizontalOptions="End">
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,10,10"
+                        FontFamily="FontAwesomeIcons"
+                        FontSize="12"
+                        Text="{x:Static Icons:IconFont.Wifi}"
+                        TextColor="{Binding IsConnectedColor}"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+            </Grid>
+        </ScrollView>
+        <Button
+            x:Name="BtnAddGame"
+            Command="{Binding GoToIGDBResultsCommand}"
+            IsEnabled="{Binding BtnAddGameIsEnabled}"
+            Style="{StaticResource BtnAddGame}"
+            Text="Add Game">
+            <Button.ImageSource>
+                <FontImageSource
+                    FontFamily="FontAwesomeIcons"
+                    Glyph="{x:Static Icons:IconFont.Plus}"
+                    Size="30" />
+            </Button.ImageSource>
+            <Button.Triggers>
+                <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                    <Setter Property="TextColor" Value="{StaticResource Gray}" />
+                    <Setter Property="ImageSource">
+                        <Setter.Value>
+                            <FontImageSource
+                                FontFamily="FontAwesomeIcons"
+                                Glyph="{x:Static Icons:IconFont.Plus}"
+                                Size="30"
+                                Color="{StaticResource Gray}" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</ContentPage>
+
+

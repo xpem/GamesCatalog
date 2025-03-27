@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using System.Windows.Input;
 
 namespace GamesCatalog.Utils.Behaviors
@@ -60,18 +55,16 @@ namespace GamesCatalog.Utils.Behaviors
 
         void InfiniteListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            IList items = AssociatedObject.ItemsSource as IList;
-
-            if (items != null)
+            if (AssociatedObject.ItemsSource is IList items)
             {
-                if (items.Count > 0)
-                {
+                //if (items.Count > 19)
+                //{
                     int index = items.Count - 1;
                     if (e.Item == items[index])
                     {
                         if (LoadMoreCommand != null && LoadMoreCommand.CanExecute(null)) LoadMoreCommand.Execute(null);
                     }
-                }
+                //}
             }
         }
     }

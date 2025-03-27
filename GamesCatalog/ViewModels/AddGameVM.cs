@@ -198,8 +198,11 @@ namespace GamesCatalog.ViewModels
             if (GameSelectedStatus == GameStatus.Played)
                 _rate = Rate;
 
+
             if (Id is null)
             {
+                _ = IGDBGamesApiService.SaveImageAsync(CoverUrl, $"{IgdbId}.jpg");
+
                 GameDTO game = new()
                 {
                     IGDBId = int.Parse(IgdbId),
