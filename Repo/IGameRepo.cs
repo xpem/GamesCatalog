@@ -10,5 +10,6 @@ namespace Repo
         Task UpdateStatusAsync(int id, DateTime updatedAt, GameStatus status, int? rate);
 
         List<TotalGroupedByStatus>? GetTotalsGroupedByStatusAsync(int uid);
+        Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page);
     }
 }

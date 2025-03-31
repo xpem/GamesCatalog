@@ -65,7 +65,7 @@ namespace GamesCatalog.ViewModels.IGDBSearch
         {
             if (CurrentIndex < 0) return;
 
-            CurrentIndex+=10;
+            CurrentIndex += 10;
             await LoadIGDBGamesList(CurrentIndex);
         }
 
@@ -82,8 +82,9 @@ namespace GamesCatalog.ViewModels.IGDBSearch
 
                 DateTime? releaseDate = null;
 
-                if (resp.Count < 10) { 
-                    CurrentIndex-=10; 
+                if (resp.Count < 10)
+                {
+                    CurrentIndex = -10;
                 }
 
                 foreach (var item in resp)

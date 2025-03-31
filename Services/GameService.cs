@@ -34,5 +34,12 @@ namespace Services
 
             return GameRepo.GetTotalsGroupedByStatusAsync(_uid);
         }
+
+        public async Task<List<GameDTO>> GetByStatusAsync(int? uid, GameStatus gameStatus, int page)
+        {
+            int _uid = uid ?? 1;
+
+            return await GameRepo.GetByStatusAsync(_uid, gameStatus, page);
+        }
     }
 }

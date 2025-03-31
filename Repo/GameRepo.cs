@@ -50,5 +50,16 @@ namespace Repo
              .SetProperty(z => z.Status, status)
              .SetProperty(z => z.Rate, rate));
         }
+
+        readonly int pageSize = 10;
+
+        public async Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page)
+        {
+            using var context = DbCtx.CreateDbContext();
+            return await context.Games
+                .Where(x => x.UserId.Equals(uid) && x.Status == gameStatus && x.Inactive == false)
+                .OrderByDescending(x => x.UpdatedAt).Skip((page - 1) * pageSize).Take(pageSize)
+                .ToListAsync();
+        }
     }
 }

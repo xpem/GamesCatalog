@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Maui;
 using GamesCatalog.ViewModels;
+using GamesCatalog.ViewModels.Game;
 using GamesCatalog.ViewModels.IGDBSearch;
 using GamesCatalog.Views;
-using GamesCatalog.Views.IGDBSearch;
+using GamesCatalog.Views.Game;
+using GamesCatalog.Views.Game.IGDBSearch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Repo;
@@ -33,9 +35,7 @@ namespace GamesCatalog
             if (!System.IO.Directory.Exists(GameService.ImagesPath))
                 System.IO.Directory.CreateDirectory(GameService.ImagesPath);
 
-            builder.Services.AddTransientWithShellRoute<IGDBResults, IGDBResultsVM>(nameof(IGDBResults));
-            builder.Services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
-            builder.Services.AddTransientWithShellRoute<Main, MainVM>(nameof(Main));
+            builder.Services.ShellRoutes();
 
             builder.Services.AddDbContextFactory<DbCtx>(options =>
             options.UseSqlite($"Filename={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GamesCatalog.db")}")
@@ -45,6 +45,15 @@ namespace GamesCatalog
             builder.Services.Repositories();
 
             return builder.Build();
+        }
+
+        public static IServiceCollection ShellRoutes(this IServiceCollection services)
+        {
+            services.AddTransientWithShellRoute<IGDBResults, IGDBResultsVM>(nameof(IGDBResults));
+            services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
+            services.AddTransientWithShellRoute<Main, MainVM>(nameof(Main));
+            services.AddTransientWithShellRoute<GameList, GameListVM>(nameof(GameList));
+            return services;
         }
 
         public static IServiceCollection Repositories(this IServiceCollection services)

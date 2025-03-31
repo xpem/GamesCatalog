@@ -1,6 +1,6 @@
 using GamesCatalog.ViewModels;
 
-namespace GamesCatalog.Views;
+namespace GamesCatalog.Views.Game;
 
 public partial class AddGame : ContentPage
 {

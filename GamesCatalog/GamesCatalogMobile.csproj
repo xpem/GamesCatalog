@@ -79,10 +79,13 @@
 	  <MauiXaml Update="Components\RatingBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AddGame.xaml">
+	  <MauiXaml Update="Views\Game\AddGame.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\IGDBSearch\IGDBResults.xaml">
+	  <MauiXaml Update="Views\Game\GameList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Game\IGDBSearch\IGDBResults.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
+    xmlns:components="clr-namespace:GamesCatalog.Components"
     x:Name="this">
     <Label IsVisible="false" Text="{Binding Source={x:Reference this}, Path=Rate}" />
     <Grid Margin="0,10,0,10" HorizontalOptions="Center">
@@ -22,7 +23,7 @@
         <Label
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star1Color}">
@@ -34,7 +35,7 @@
             Grid.Column="1"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star2Color}">
@@ -46,7 +47,7 @@
             Grid.Column="2"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star3Color}">
@@ -58,7 +59,7 @@
             Grid.Column="3"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star4Color}">
@@ -70,7 +71,7 @@
             Grid.Column="4"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star5Color}">
@@ -82,7 +83,7 @@
             Grid.Column="5"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star6Color}">
@@ -94,7 +95,7 @@
             Grid.Column="6"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star7Color}">
@@ -106,7 +107,7 @@
             Grid.Column="7"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star8Color}">
@@ -118,7 +119,7 @@
             Grid.Column="8"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star9Color}">
@@ -130,7 +131,7 @@
             Grid.Column="9"
             Margin="0,0,3,0"
             FontFamily="FontAwesomeIcons"
-            FontSize="20"
+            FontSize="{Binding Source={x:Reference this}, Path=IconFontSize}"
             HorizontalOptions="Center"
             Text="{x:Static Icons:IconFont.Star}"
             TextColor="{Binding Source={x:Reference this}, Path=Star10Color}">

@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models;
-using GamesCatalog.Views.IGDBSearch;
+using GamesCatalog.Views.Game;
+using GamesCatalog.Views.Game.IGDBSearch;
 using Models;
 using Models.DTOs;
 using Services;
@@ -125,7 +126,8 @@ public partial class MainVM(IGameService gameService) : ViewModelBase
             lastFiveIGDBIdsByUpdatedAt.RemoveAt(lastFiveIGDBIdsByUpdatedAt.Count - 1);
     }
 
-    public void BuildColView(List<TotalGroupedByStatus> totalsGroupedByStatus, GameStatus gameStatus, ref ObservableCollection<UIHorizontalColViewGroupedImage> lastFiveIGDBIdsByUpdatedAt, ref string?[] lastFiveIGDBIdsByUpdatedAtCache)
+    public void BuildColView(List<TotalGroupedByStatus> totalsGroupedByStatus, GameStatus gameStatus,
+        ref ObservableCollection<UIHorizontalColViewGroupedImage> lastFiveIGDBIdsByUpdatedAt, ref string?[] lastFiveIGDBIdsByUpdatedAtCache)
     {
         TotalGroupedByStatus? totalsGrouped = totalsGroupedByStatus.FirstOrDefault(x => x.Status == gameStatus);
 
@@ -172,5 +174,19 @@ public partial class MainVM(IGameService gameService) : ViewModelBase
         }
 
         lastFiveIGDBIdsByUpdatedAtCache = _lastFiveIGDBIdsByUpdatedAt;
+    }
+
+    [RelayCommand]
+    private Task WantList() => GoToAsync($"{nameof(GameList)}?GameStatus={(int)GameStatus.Want}");
+
+    [RelayCommand]
+    private Task PlayingList() => GoToAsync($"{nameof(GameList)}?GameStatus={(int)GameStatus.Playing}");
+
+    [RelayCommand]
+    private Task PlayedList() => GoToAsync($"{nameof(GameList)}?GameStatus={(int)GameStatus.Played}");
+
+    private static Task GoToAsync(string route)
+    {
+        return Shell.Current.GoToAsync(route, true);
     }
 }

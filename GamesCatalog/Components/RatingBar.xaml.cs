@@ -10,17 +10,10 @@ public partial class RatingBar : VerticalStackLayout
         InitializeComponent();
     }
 
-    public static readonly BindableProperty RatingBarIsVisibleProperty = BindableProperty.Create(
-       propertyName: nameof(RatingBarIsVisible), returnType: typeof(bool), declaringType: typeof(RatingBar), defaultValue: false);
+    public static readonly BindableProperty IconFontSizeProperty = BindableProperty.Create(
+    propertyName: nameof(IconFontSize), returnType: typeof(int), declaringType: typeof(BorderedEntry), defaultValue: 20, defaultBindingMode: BindingMode.TwoWay);
 
-    public bool RatingBarIsVisible
-    {
-        get
-        {
-            return (bool)GetValue(RatingBarIsVisibleProperty);
-        }
-        set { SetValue(RatingBarIsVisibleProperty, value); }
-    }
+    public int IconFontSize { get => (int)GetValue(IconFontSizeProperty); set { SetValue(IconFontSizeProperty, value); } }
 
     public static readonly BindableProperty RateProperty = BindableProperty.Create(
     propertyName: nameof(Rate), returnType: typeof(int), declaringType: typeof(RatingBar), defaultValue: 0, defaultBindingMode: BindingMode.TwoWay);

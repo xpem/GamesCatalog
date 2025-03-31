@@ -67,7 +67,14 @@
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <VerticalStackLayout Margin="5" VerticalOptions="Fill">
-                    <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
+                    <Border
+                        x:Name="WantCard"
+                        Margin="0,5,0,5"
+                        Style="{StaticResource BorderCardItem}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding WantListCommand}" />
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Border.GestureRecognizers>
                         <Grid
                             RowDefinitions="*,*"
                             RowSpacing="5"
@@ -116,7 +123,14 @@
                             <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
                         </Grid>
                     </Border>
-                    <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
+                    <Border
+                        x:Name="PlayingCard"
+                        Margin="0,5,0,5"
+                        Style="{StaticResource BorderCardItem}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PlayingListCommand}" />
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Border.GestureRecognizers>
                         <Grid
                             RowDefinitions="*,*"
                             RowSpacing="5"
@@ -165,7 +179,14 @@
                             <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
                         </Grid>
                     </Border>
-                    <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
+                    <Border
+                        x:Name="PlayedCard"
+                        Margin="0,5,0,5"
+                        Style="{StaticResource BorderCardItem}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PlayedListCommand}" />
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Border.GestureRecognizers>
                         <Grid
                             RowDefinitions="*,*"
                             RowSpacing="5"
@@ -177,6 +198,7 @@
                                 Margin="0"
                                 FlowDirection="RightToLeft"
                                 HorizontalOptions="Start"
+                                InputTransparent="True"
                                 ItemsLayout="HorizontalList"
                                 ItemsSource="{Binding LastFiveIGDBIdsByUpdatedAtPlayed}"
                                 ItemsUpdatingScrollMode="KeepScrollOffset">
@@ -231,7 +253,6 @@
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
             </Grid>
-
         </ScrollView>
         <Button
             x:Name="BtnAddGame"

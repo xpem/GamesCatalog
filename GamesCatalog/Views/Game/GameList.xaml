@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GamesCatalog.Views.Game.GameList"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:GamesCatalog.Utils.Behaviors"
+    xmlns:components="clr-namespace:GamesCatalog.Components"
+    xmlns:model="clr-namespace:GamesCatalog.Models"
+    xmlns:vm="clr-namespace:GamesCatalog.ViewModels.Game"
+    Title="{Binding TitleStatus}"
+    x:DataType="vm:GameListVM">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border
+            Margin="5"
+            Padding="5"
+            StrokeShape="RoundRectangle 10">
+            <ListView
+                x:Name="GamesLstVw"
+                CachingStrategy="RecycleElement"
+                HasUnevenRows="True"
+                ItemsSource="{Binding Games}"
+                SelectionMode="None">
+                <ListView.Behaviors>
+                    <behaviors:InfiniteScrollBehavior LoadMoreCommand="{Binding LoadMoreCommand}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:UIGame">
+                        <ViewCell>
+                            <Border
+                                Margin="0,0,0,5"
+                                Padding="10"
+                                BackgroundColor="#101923"
+                                Stroke="#2B659B"
+                                StrokeShape="RoundRectangle 10">
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,0,0,10"
+                                        FontSize="20"
+                                        LineBreakMode="CharacterWrap"
+                                        Text="{Binding Name}"
+                                        TextColor="White" />
+                                    <Image
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Aspect="AspectFit"
+                                        HeightRequest="220"
+                                        Source="{Binding CoverUrl}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="170" />
+                                    <StackLayout
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0">
+                                        <Label
+                                            FontAttributes="Italic"
+                                            FontSize="15"
+                                            Text="{Binding ReleaseDate, StringFormat='Release: {0:F0}'}"
+                                            TextColor="#98BDD3" />
+                                        <Label
+                                            FontSize="15"
+                                            Text="{Binding Platforms, StringFormat='Platforms: {0:F0}'}"
+                                            TextColor="#98BDD3" />
+                                        <components:RatingBar
+                                            HorizontalOptions="Start"
+                                            IconFontSize="10"
+                                            IsEnabled="False"
+                                            IsVisible="{Binding RateIsVisible}"
+                                            Rate="{Binding Rate}" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <ActivityIndicator
+                        HorizontalOptions="Center"
+                        IsRunning="{Binding IsBusy}"
+                        IsVisible="{Binding IsBusy}"
+                        VerticalOptions="Center"
+                        Color="{StaticResource ActiveColor}" />
+                </ListView.Footer>
+            </ListView>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -2,7 +2,7 @@ using GamesCatalog.Models.IGDBApi;
 using GamesCatalog.ViewModels;
 using GamesCatalog.ViewModels.IGDBSearch;
 
-namespace GamesCatalog.Views.IGDBSearch;
+namespace GamesCatalog.Views.Game.IGDBSearch;
 
 public partial class IGDBResults : ContentPage
 {
