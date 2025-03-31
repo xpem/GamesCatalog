@@ -201,7 +201,8 @@ namespace GamesCatalog.ViewModels
 
             if (Id is null)
             {
-                _ = IGDBGamesApiService.SaveImageAsync(CoverUrl, $"{IgdbId}.jpg");
+                if (IsOn && CoverUrl is not null)
+                    await IGDBGamesApiService.SaveImageAsync(CoverUrl, $"{IgdbId}.jpg");
 
                 GameDTO game = new()
                 {
@@ -236,7 +237,7 @@ namespace GamesCatalog.ViewModels
             else
                 await Application.Current.Windows[0].Page.DisplayAlert("Success", displayMessage, null, "Ok");
 
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("../..");
 
             ConfirmIsEnabled = true;
         }

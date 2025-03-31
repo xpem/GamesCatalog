@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
+    xmlns:model="clr-namespace:GamesCatalog.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
     x:Name="this"
@@ -24,10 +25,6 @@
             <Setter Property="HorizontalOptions" Value="End" />
             <Setter Property="VerticalOptions" Value="End" />
         </Style>
-
-
-
-
         <Style x:Key="BorderCardItem" TargetType="Border">
             <Setter Property="BackgroundColor" Value="{StaticResource SecondaryBGColor}" />
             <Setter Property="Stroke" Value="{StaticResource ActiveColor}" />
@@ -38,26 +35,9 @@
             <Setter Property="VerticalOptions" Value="Start" />
             <Setter Property="HorizontalOptions" Value="Fill" />
         </Style>
-        <Style x:Key="LblCardImgIcon" TargetType="Label">
-            <Setter Property="HorizontalOptions" Value="Start" />
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="FontSize" Value="50" />
-            <Setter Property="Margin" Value="5,5,0,10" />
-            <Setter Property="FontFamily" Value="FontAwesomeIcons" />
-            <Setter Property="TextColor" Value="{StaticResource White}" />
-        </Style>
         <Style x:Key="LblImgIcon" TargetType="Label">
             <Setter Property="FontFamily" Value="FontAwesomeIcons" />
             <Setter Property="TextColor" Value="{StaticResource White}" />
-        </Style>
-        <Style x:Key="LblQuantity" TargetType="Label">
-            <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="70" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="TextColor" Value="{StaticResource White}" />
-            <Setter Property="HorizontalOptions" Value="Start" />
-            <Setter Property="Padding" Value="0,0,0,0" />
         </Style>
         <Style x:Key="ImgAngleRight" TargetType="Label">
             <Setter Property="FontFamily" Value="FontAwesomeIcons" />
@@ -67,7 +47,7 @@
             <Setter Property="HorizontalOptions" Value="End" />
             <Setter Property="Text" Value="{x:Static Icons:IconFont.AngleRight}" />
         </Style>
-        <Style x:Key="LblText" TargetType="Label">
+        <Style x:Key="LblQtd" TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource White}" />
             <Setter Property="VerticalOptions" Value="End" />
             <Setter Property="VerticalTextAlignment" Value="End" />
@@ -100,19 +80,19 @@
                                 FlowDirection="RightToLeft"
                                 HorizontalOptions="Start"
                                 ItemsLayout="HorizontalList"
-                                ItemsSource="{Binding Imagens2}">
+                                ItemsSource="{Binding LastFiveIGDBIdsByUpdatedAtWant}">
                                 <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="vm:ImageT2">
+                                    <DataTemplate x:DataType="model:UIHorizontalColViewGroupedImage">
                                         <AbsoluteLayout
                                             Margin="0"
                                             Padding="0"
                                             IsClippedToBounds="False">
                                             <Image
-                                                Margin="{Binding margin}"
+                                                Margin="{Binding Margin}"
                                                 Aspect="Fill"
-                                                BackgroundColor="Transparent"
+                                                BackgroundColor="LightGray"
                                                 HeightRequest="136"
-                                                Source="{Binding url}"
+                                                Source="{Binding Url}"
                                                 WidthRequest="100" />
                                         </AbsoluteLayout>
                                     </DataTemplate>
@@ -130,18 +110,17 @@
                                 Grid.Row="1"
                                 FontSize="20"
                                 HorizontalOptions="Center"
-                                Style="{StaticResource LblText}"
-                                Text="15 playing"
+                                Style="{StaticResource LblQtd}"
+                                Text="{Binding QtdWant, StringFormat='{0} Want to Play'}"
                                 VerticalOptions="Center" />
                             <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
                         </Grid>
                     </Border>
-                    <!-- <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
+                    <Border Margin="0,5,0,5" Style="{StaticResource BorderCardItem}">
                         <Grid
                             RowDefinitions="*,*"
                             RowSpacing="5"
                             Style="{StaticResource GridCardItem}">
-
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -150,19 +129,19 @@
                                 FlowDirection="RightToLeft"
                                 HorizontalOptions="Start"
                                 ItemsLayout="HorizontalList"
-                                ItemsSource="{Binding Imagens2}">
+                                ItemsSource="{Binding LastFiveIGDBIdsByUpdatedAtPlaying}">
                                 <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="vm:ImageT2">
+                                    <DataTemplate x:DataType="model:UIHorizontalColViewGroupedImage">
                                         <AbsoluteLayout
                                             Margin="0"
                                             Padding="0"
                                             IsClippedToBounds="False">
                                             <Image
-                                                Margin="{Binding margin}"
+                                                Margin="{Binding Margin}"
                                                 Aspect="Fill"
-                                                BackgroundColor="Transparent"
+                                                BackgroundColor="LightGray"
                                                 HeightRequest="136"
-                                                Source="{Binding url}"
+                                                Source="{Binding Url}"
                                                 WidthRequest="100" />
                                         </AbsoluteLayout>
                                     </DataTemplate>
@@ -180,8 +159,8 @@
                                 Grid.Row="1"
                                 FontSize="20"
                                 HorizontalOptions="Center"
-                                Style="{StaticResource LblText}"
-                                Text="15 playing"
+                                Style="{StaticResource LblQtd}"
+                                Text="{Binding QtdPlaying, StringFormat='{0} Playing'}"
                                 VerticalOptions="Center" />
                             <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
                         </Grid>
@@ -191,7 +170,6 @@
                             RowDefinitions="*,*"
                             RowSpacing="5"
                             Style="{StaticResource GridCardItem}">
-
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -200,19 +178,20 @@
                                 FlowDirection="RightToLeft"
                                 HorizontalOptions="Start"
                                 ItemsLayout="HorizontalList"
-                                ItemsSource="{Binding Imagens2}">
+                                ItemsSource="{Binding LastFiveIGDBIdsByUpdatedAtPlayed}"
+                                ItemsUpdatingScrollMode="KeepScrollOffset">
                                 <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="vm:ImageT2">
+                                    <DataTemplate x:DataType="model:UIHorizontalColViewGroupedImage">
                                         <AbsoluteLayout
                                             Margin="0"
                                             Padding="0"
                                             IsClippedToBounds="False">
                                             <Image
-                                                Margin="{Binding margin}"
+                                                Margin="{Binding Margin}"
                                                 Aspect="Fill"
-                                                BackgroundColor="Transparent"
+                                                BackgroundColor="LightGray"
                                                 HeightRequest="136"
-                                                Source="{Binding url}"
+                                                Source="{Binding Url}"
                                                 WidthRequest="100" />
                                         </AbsoluteLayout>
                                     </DataTemplate>
@@ -230,12 +209,12 @@
                                 Grid.Row="1"
                                 FontSize="20"
                                 HorizontalOptions="Center"
-                                Style="{StaticResource LblText}"
-                                Text="15 playing"
+                                Style="{StaticResource LblQtd}"
+                                Text="{Binding QtdPlayed, StringFormat='{0} Played'}"
                                 VerticalOptions="Center" />
                             <Label Grid.Row="1" Style="{StaticResource ImgAngleRight}" />
                         </Grid>
-                    </Border>-->
+                    </Border>
                 </VerticalStackLayout>
                 <HorizontalStackLayout
                     x:Name="BodyGrid_Footer"
@@ -252,6 +231,7 @@
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
             </Grid>
+
         </ScrollView>
         <Button
             x:Name="BtnAddGame"
@@ -275,6 +255,18 @@
                                 Glyph="{x:Static Icons:IconFont.Plus}"
                                 Size="30"
                                 Color="{StaticResource Gray}" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger TargetType="Button" Property="IsEnabled" Value="true">
+                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                    <Setter Property="ImageSource">
+                        <Setter.Value>
+                            <FontImageSource
+                                FontFamily="FontAwesomeIcons"
+                                Glyph="{x:Static Icons:IconFont.Plus}"
+                                Size="30"
+                                Color="{StaticResource White}" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>

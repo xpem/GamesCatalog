@@ -1,4 +1,5 @@
 ﻿using ApiRepo;
+using Models;
 using Models.DTOs;
 using Models.Resps;
 using Repo;
@@ -11,7 +12,7 @@ namespace Services
 
         public async Task<ServiceResp> CreateAsync(GameDTO game)
         {
-            game.CreatedAt = DateTime.Now;
+            game.CreatedAt = game.UpdatedAt = DateTime.Now;
 
             //User id fixed to 1
             game.UserId = 1;
@@ -27,7 +28,11 @@ namespace Services
         public async Task UpdateStatusAsync(int id, GameStatus gameStatus, int? rate) =>
             await GameRepo.UpdateStatusAsync(id, DateTime.Now, gameStatus, rate);
 
-      
-  
+        public List<TotalGroupedByStatus>? GetTotalsGroupedByStatus(int? uid = null)
+        {
+            int _uid = uid ?? 1;
+
+            return GameRepo.GetTotalsGroupedByStatusAsync(_uid);
+        }
     }
 }

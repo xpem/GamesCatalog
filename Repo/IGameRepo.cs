@@ -1,4 +1,5 @@
-﻿using Models.DTOs;
+﻿using Models;
+using Models.DTOs;
 
 namespace Repo
 {
@@ -7,5 +8,7 @@ namespace Repo
         Task CreateAsync(GameDTO game);
         Task<GameDTO?> GetByIGDBIdAsync(int igdbId);
         Task UpdateStatusAsync(int id, DateTime updatedAt, GameStatus status, int? rate);
+
+        List<TotalGroupedByStatus>? GetTotalsGroupedByStatusAsync(int uid);
     }
 }

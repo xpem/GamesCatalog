@@ -28,7 +28,7 @@ namespace GamesCatalog.ViewModels.IGDBSearch
             }
         }
 
-        public int CurrentPage { get; set; }
+        public int CurrentIndex { get; set; }
 
         public ObservableCollection<UIIGDBGame> ListGames
         {
@@ -37,7 +37,6 @@ namespace GamesCatalog.ViewModels.IGDBSearch
         }
 
         private readonly SemaphoreSlim searchSemaphore = new(1, 1);
-        private DateTime lastSearchTime = DateTime.MinValue;
         private CancellationTokenSource? searchDelayTokenSource;
 
         private async Task SearchGamesList()
@@ -51,25 +50,23 @@ namespace GamesCatalog.ViewModels.IGDBSearch
 
             await Task.Delay(1500, token);
 
-            if (!token.IsCancellationRequested) // Só executa se não foi cancelado
+            if (!token.IsCancellationRequested) // Only run if it has not been canceled / Só executa se não foi cancelado
             {
-                lastSearchTime = DateTime.UtcNow;
-
                 if (ListGames.Count > 0)
                     ListGames.Clear();
 
-                CurrentPage = 0;
-                await LoadIGDBGamesList(CurrentPage);
+                CurrentIndex = 0;
+                await LoadIGDBGamesList(CurrentIndex);
             }
         }
 
         [RelayCommand]
         public async Task LoadMore()
         {
-            if (CurrentPage < 0) return;
+            if (CurrentIndex < 0) return;
 
-            CurrentPage++;
-            await LoadIGDBGamesList(CurrentPage);
+            CurrentIndex+=10;
+            await LoadIGDBGamesList(CurrentIndex);
         }
 
 
@@ -81,12 +78,12 @@ namespace GamesCatalog.ViewModels.IGDBSearch
 
             try
             {
-                List<IGDBGame> resp = await IGDBGamesApiService.Get(SearchText, startIndex);
+                List<IGDBGame> resp = await IGDBGamesApiService.GetAsync(SearchText, startIndex);
 
                 DateTime? releaseDate = null;
 
-                if (resp.Count < 20) { 
-                    CurrentPage--; 
+                if (resp.Count < 10) { 
+                    CurrentIndex-=10; 
                 }
 
                 foreach (var item in resp)

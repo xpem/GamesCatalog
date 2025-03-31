@@ -43,23 +43,33 @@
                                 Stroke="#2B659B"
                                 StrokeShape="RoundRectangle 10">
                                 <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,0,0,10"
+                                        FontSize="20"
+                                        LineBreakMode="CharacterWrap"
+                                        Text="{Binding Name}"
+                                        TextColor="White" />
                                     <Image
+                                        Grid.Row="1"
                                         Grid.Column="0"
                                         Aspect="AspectFit"
-                                        HeightRequest="150"
+                                        HeightRequest="220"
                                         Source="{Binding CoverUrl}"
                                         VerticalOptions="Center"
-                                        WidthRequest="150" />
-                                    <StackLayout Grid.Column="1" Margin="10,0,0,0">
-                                        <Label
-                                            FontSize="Large"
-                                            LineBreakMode="TailTruncation"
-                                            Text="{Binding Name}"
-                                            TextColor="White" />
+                                        WidthRequest="170" />
+                                    <StackLayout
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0">
                                         <Label
                                             FontAttributes="Italic"
                                             FontSize="Micro"

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Models;
 using Models.DTOs;
 
 namespace Repo
@@ -18,6 +19,26 @@ namespace Repo
         {
             using var context = DbCtx.CreateDbContext();
             return await context.Games.FirstOrDefaultAsync(g => g.IGDBId == igdbId);
+        }
+
+        public List<TotalGroupedByStatus>? GetTotalsGroupedByStatusAsync(int uid)
+        {
+            using var context = DbCtx.CreateDbContext();
+
+            var result = context.Games
+                .Where(x => x.UserId.Equals(uid) && x.Inactive == false)
+                .GroupBy(x => x.Status)
+                .Select(x => new TotalGroupedByStatus
+                {
+                    Status = x.Key,
+                    Total = x.Count(),
+                    LastFiveIGDBIdsByUpdatedAt = x.OrderByDescending(g => g.UpdatedAt)
+                                                    .Take(5)
+                                                    .Select(g => g.IGDBId.ToString())
+                                                    .ToArray()
+                }).AsEnumerable();
+
+            return [.. result];
         }
 
         public async Task UpdateStatusAsync(int id, DateTime updatedAt, GameStatus status, int? rate)

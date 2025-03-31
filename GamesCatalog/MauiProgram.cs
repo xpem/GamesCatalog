@@ -30,6 +30,9 @@ namespace GamesCatalog
             builder.Logging.AddDebug();
 #endif
 
+            if (!System.IO.Directory.Exists(GameService.ImagesPath))
+                System.IO.Directory.CreateDirectory(GameService.ImagesPath);
+
             builder.Services.AddTransientWithShellRoute<IGDBResults, IGDBResultsVM>(nameof(IGDBResults));
             builder.Services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
             builder.Services.AddTransientWithShellRoute<Main, MainVM>(nameof(Main));

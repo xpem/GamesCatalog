@@ -5,9 +5,9 @@ namespace Services
 {
     public static class IGDBGamesApiService
     {
-        public async static Task<List<Models.Resps.IGDBGame>> Get(string search, int startIndex)
+        public async static Task<List<Models.Resps.IGDBGame>> GetAsync(string search, int startIndex)
         {
-            Models.Resps.ApiResp resp = await IGDBGamesAPIRepo.Get(search, startIndex);
+            Models.Resps.ApiResp resp = await IGDBGamesAPIRepo.GetAsync(search, startIndex);
 
             if (resp is not null && resp.Success && resp.Content is not null)
             {
@@ -19,14 +19,21 @@ namespace Services
 
         public async static Task SaveImageAsync(string imageUrl, string fileName)
         {
-            byte[] imageBytes = await IGDBGamesAPIRepo.GetGameImageAsByteArrayAsync(imageUrl);
+            try
+            {
+                byte[] imageBytes = await IGDBGamesAPIRepo.GetGameImageAsync(imageUrl);
 
-            string filePath = Path.Combine(GameService.ImagesPath, fileName);
+                string filePath = Path.Combine(GameService.ImagesPath, fileName);
 
-            if (File.Exists(filePath))
-                return;
+                if (File.Exists(filePath))
+                    return;
 
-            await File.WriteAllBytesAsync(filePath, imageBytes);
+                await File.WriteAllBytesAsync(filePath, imageBytes);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
