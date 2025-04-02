@@ -41,11 +41,21 @@ namespace Repo
             return [.. result];
         }
 
+        public async Task InactivateAsync(int uid, int id, DateTime updatedAt)
+        {
+            using var context = DbCtx.CreateDbContext();
+            await context.Games.Where(x => x.Id == id && x.UserId == uid)
+                .ExecuteUpdateAsync(y => y
+             .SetProperty(z => z.UpdatedAt, updatedAt)
+             .SetProperty(z => z.Inactive, true));
+        }
+
         public async Task UpdateStatusAsync(int id, DateTime updatedAt, GameStatus status, int? rate)
         {
             using var context = DbCtx.CreateDbContext();
 
             await context.Games.Where(x => x.Id == id).ExecuteUpdateAsync(y => y
+             .SetProperty(z => z.Inactive, false)
              .SetProperty(z => z.UpdatedAt, updatedAt)
              .SetProperty(z => z.Status, status)
              .SetProperty(z => z.Rate, rate));
@@ -58,6 +68,15 @@ namespace Repo
             using var context = DbCtx.CreateDbContext();
             return await context.Games
                 .Where(x => x.UserId.Equals(uid) && x.Status == gameStatus && x.Inactive == false)
+                .OrderByDescending(x => x.UpdatedAt).Skip((page - 1) * pageSize).Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page, string searchText)
+        {
+            using var context = DbCtx.CreateDbContext();
+            return await context.Games
+                .Where(x => x.UserId.Equals(uid) && x.Status == gameStatus && x.Inactive == false && EF.Functions.Like(x.Name, $"%{searchText}%"))
                 .OrderByDescending(x => x.UpdatedAt).Skip((page - 1) * pageSize).Take(pageSize)
                 .ToListAsync();
         }

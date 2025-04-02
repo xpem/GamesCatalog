@@ -11,9 +11,17 @@
     x:DataType="vm:GameListVM">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Border Padding="10,0,10,5" Style="{StaticResource BorderPrimary}">
+            <components:BorderedEntry
+                LabelText="Search"
+                MaxLength="100"
+                Text="{Binding SearchText}" />
+        </Border>
         <Border
+            Grid.Row="1"
             Margin="5"
             Padding="5"
             StrokeShape="RoundRectangle 10">
@@ -21,6 +29,7 @@
                 x:Name="GamesLstVw"
                 CachingStrategy="RecycleElement"
                 HasUnevenRows="True"
+                ItemTapped="GamesLstVw_ItemTapped"
                 ItemsSource="{Binding Games}"
                 SelectionMode="None">
                 <ListView.Behaviors>

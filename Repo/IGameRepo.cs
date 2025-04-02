@@ -11,5 +11,7 @@ namespace Repo
 
         List<TotalGroupedByStatus>? GetTotalsGroupedByStatusAsync(int uid);
         Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page);
+        Task InactivateAsync(int uid, int id, DateTime updatedAt);
+        Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page, string searchText);
     }
 }

@@ -34,7 +34,7 @@
 
     <Style x:Key="EntryBorders" TargetType="Border">
         <Setter Property="Padding" Value="-5,0,0,0" />
-        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
         <Setter Property="BackgroundColor" Value="#101923" />
         <Setter Property="Stroke" Value="{StaticResource ActiveColor}" />
         <Setter Property="StrokeShape" Value="RoundRectangle 5" />

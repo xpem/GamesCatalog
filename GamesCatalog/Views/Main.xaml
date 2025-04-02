@@ -86,6 +86,7 @@
                                 Margin="0"
                                 FlowDirection="RightToLeft"
                                 HorizontalOptions="Start"
+                                InputTransparent="True"
                                 ItemsLayout="HorizontalList"
                                 ItemsSource="{Binding LastFiveIGDBIdsByUpdatedAtWant}">
                                 <CollectionView.ItemTemplate>
@@ -142,6 +143,7 @@
                                 Margin="0"
                                 FlowDirection="RightToLeft"
                                 HorizontalOptions="Start"
+                                InputTransparent="True"
                                 ItemsLayout="HorizontalList"
                                 ItemsSource="{Binding LastFiveIGDBIdsByUpdatedAtPlaying}">
                                 <CollectionView.ItemTemplate>

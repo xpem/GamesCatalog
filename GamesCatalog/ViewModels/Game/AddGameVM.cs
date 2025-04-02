@@ -40,6 +40,7 @@ namespace GamesCatalog.ViewModels
             get => playedBgColor;
             set => SetProperty(ref playedBgColor, value);
         }
+
         public bool ConfirmIsVisible
         {
             get => confirmIsVisible;
@@ -106,6 +107,14 @@ namespace GamesCatalog.ViewModels
             set => SetProperty(ref ratingBarIsVisible, value);
         }
 
+        private bool expanderIsVisible = false;
+
+        public bool ExpanderIsVisible
+        {
+            get => expanderIsVisible;
+            set => SetProperty(ref expanderIsVisible, value);
+        }
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query is not null && query.TryGetValue("Game", out object? game))
@@ -134,14 +143,20 @@ namespace GamesCatalog.ViewModels
 
             Id = gameDTO.Id;
 
-            switch (gameDTO.Status)
+            if (!gameDTO.Inactive)
             {
-                case GameStatus.Want: _ = Want(); break;
-                case GameStatus.Playing: _ = Playing(); break;
-                case GameStatus.Played:
-                    _ = Played();
-                    Rate = gameDTO.Rate;
-                    break;
+                if (Id is not null)
+                    ExpanderIsVisible = true;
+
+                switch (gameDTO.Status)
+                {
+                    case GameStatus.Want: _ = Want(); break;
+                    case GameStatus.Playing: _ = Playing(); break;
+                    case GameStatus.Played:
+                        _ = Played();
+                        Rate = gameDTO.Rate;
+                        break;
+                }
             }
         }
 
@@ -155,6 +170,7 @@ namespace GamesCatalog.ViewModels
             ConfirmIsVisible = true;
             RatingBarIsVisible = false;
             Rate = 0;
+
             return Task.CompletedTask;
         }
 
@@ -168,6 +184,7 @@ namespace GamesCatalog.ViewModels
             ConfirmIsVisible = true;
             RatingBarIsVisible = false;
             Rate = 0;
+
             return Task.CompletedTask;
         }
 
@@ -197,7 +214,6 @@ namespace GamesCatalog.ViewModels
             // If the game is played, the rate is required
             if (GameSelectedStatus == GameStatus.Played)
                 _rate = Rate;
-
 
             if (Id is null)
             {
@@ -240,6 +256,27 @@ namespace GamesCatalog.ViewModels
             await Shell.Current.GoToAsync("../..");
 
             ConfirmIsEnabled = true;
+        }
+
+        [RelayCommand]
+        public async Task Inactivate()
+        {
+            if (await Application.Current.Windows[0].Page.DisplayAlert("Confirm", "Remove from list?", "Yes", "Cancel"))
+            {
+                _ = gameService.InactivateAsync(null, Id.Value);
+
+                if (DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android)
+                {
+                    ToastDuration duration = ToastDuration.Short;
+
+                    var toast = Toast.Make("Game removed", duration, 15);
+                    await toast.Show();
+                }
+                else
+                    await Application.Current.Windows[0].Page.DisplayAlert("Success", "Game removed", null, "Ok");
+
+                await Shell.Current.GoToAsync("..");
+            }
         }
     }
 }

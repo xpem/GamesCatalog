@@ -35,11 +35,21 @@ namespace Services
             return GameRepo.GetTotalsGroupedByStatusAsync(_uid);
         }
 
-        public async Task<List<GameDTO>> GetByStatusAsync(int? uid, GameStatus gameStatus, int page)
+        public async Task<List<GameDTO>> GetByStatusAsync(int? uid, GameStatus gameStatus, int page, string searchText)
         {
             int _uid = uid ?? 1;
 
-            return await GameRepo.GetByStatusAsync(_uid, gameStatus, page);
+            if (string.IsNullOrEmpty(searchText))
+                return await GameRepo.GetByStatusAsync(_uid, gameStatus, page);
+            else
+                return await GameRepo.GetByStatusAsync(_uid, gameStatus, page, searchText);
+        }
+
+        public async Task InactivateAsync(int? uid, int id)
+        {
+            int _uid = uid ?? 1;
+
+            await GameRepo.InactivateAsync(_uid, id, DateTime.Now);
         }
     }
 }
