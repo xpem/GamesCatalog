@@ -13,12 +13,13 @@ namespace ApiRepo
             {
                 HttpClient httpClient = new();
 
-                httpClient.DefaultRequestHeaders.Add("Client-ID", ApiKeys.CLIENTID);
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKeys.TOKENTEMP}");
+                //httpClient.DefaultRequestHeaders.Add("Client-ID", ApiKeys.CLIENTID);
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1IiwiZW1haWwiOiJlbWFudWVsLnhwZUBnbWFpbC5jb20iLCJuYmYiOjE3NDQ4Mzg2NjQsImV4cCI6MTc0NTI3MDY2NCwiaWF0IjoxNzQ0ODM4NjY0fQ.x_Q_a1PcGxgeduZFJZllNc7eGOZd1cKBfU7aHH9UQSg");
 
-                var bodyContent = new StringContent($"fields cover,cover.url,cover.image_id,first_release_date,name,platforms.abbreviation,summary;search \"{search}\"; limit 10; offset {startIndex};", Encoding.UTF8, "application/json");
-
-                HttpResponseMessage httpResponse = await httpClient.PostAsync("https://api.igdb.com/v4/games", bodyContent);
+                var bodyContent = new StringContent($"{{  \"Search\": \"{search}\",  \"StartIndex\": \"{startIndex}\"}}", Encoding.UTF8, "application/json");
+                //http://10.0.2.2:5048
+                //http://localhost:5048
+                HttpResponseMessage httpResponse = await httpClient.PostAsync("http://localhost:5048/Game/IGDB", bodyContent);
 
                 return new ApiResp()
                 {
@@ -27,7 +28,7 @@ namespace ApiRepo
                     Content = await httpResponse.Content.ReadAsStringAsync()
                 };
             }
-            catch { throw; }
+            catch(Exception ex) { throw; }
         }
 
         public static async Task<byte[]> GetGameImageAsync(string imageUrl)

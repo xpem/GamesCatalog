@@ -27,4 +27,9 @@ public partial class BorderedEntry : VerticalStackLayout
 
     public int MaxLength { get => (int)GetValue(MaxLengthProperty); set { SetValue(MaxLengthProperty, value); } }
 
+    public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
+        propertyName: nameof(IsPassword), returnType: typeof(bool), declaringType: typeof(BorderedEntry), defaultValue: false, defaultBindingMode: BindingMode.OneWay);
+
+    public bool IsPassword { get => (bool)GetValue(IsPasswordProperty); set { SetValue(IsPasswordProperty, value); } }
+
 }

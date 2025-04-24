@@ -9,6 +9,7 @@
     <Border IsEnabled="{Binding Source={x:Reference this}, Path=Enabled}" Style="{StaticResource EntryBorders}">
         <Entry
             IsEnabled="{Binding Source={x:Reference this}, Path=Enabled}"
+            IsPassword="{Binding Source={x:Reference this}, Path=IsPassword}"
             MaxLength="{Binding Source={x:Reference this}, Path=MaxLength}"
             Style="{StaticResource Entry}"
             Text="{Binding Source={x:Reference this}, Path=Text}" />

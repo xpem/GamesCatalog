@@ -1,5 +1,8 @@
-﻿namespace Models.DTOs;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Models.DTOs;
+
+[Table("Game")]
 [Microsoft.EntityFrameworkCore.Index(nameof(IGDBId), IsUnique = true)]
 public class GameDTO : DTOBase
 {    

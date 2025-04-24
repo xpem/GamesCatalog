@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models;
 using Models.DTOs;
-using Services;
+using Services.Interfaces;
 using System.Collections.ObjectModel;
 
 namespace GamesCatalog.ViewModels.Game

@@ -62,6 +62,15 @@
         <Setter Property="Margin" Value="5,0,0,0" />
     </Style>
 
+    <Style x:Key="BtnConfirm" TargetType="Button">
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryElementColor}" />
+        <Setter Property="TextColor" Value="{StaticResource Black}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+
 </ResourceDictionary>
 
 

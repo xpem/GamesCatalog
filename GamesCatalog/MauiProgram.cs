@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Repo;
 using Services;
+using Services.Interfaces;
 
 namespace GamesCatalog
 {
@@ -53,12 +54,14 @@ namespace GamesCatalog
             services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
             services.AddTransientWithShellRoute<Main, MainVM>(nameof(Main));
             services.AddTransientWithShellRoute<GameList, GameListVM>(nameof(GameList));
+            services.AddTransientWithShellRoute<SignIn, SignInVM>(nameof(SignIn));
             return services;
         }
 
         public static IServiceCollection Repositories(this IServiceCollection services)
         {
             services.AddScoped<IGameRepo, GameRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
             return services;
         }
 
@@ -66,6 +69,7 @@ namespace GamesCatalog
         {
             services.AddScoped<IBuildDbService, BuildDbService>();
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
     }

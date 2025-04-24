@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models.IGDBApi;
 using Models.DTOs;
 using Services;
+using Services.Interfaces;
 
 namespace GamesCatalog.ViewModels
 {

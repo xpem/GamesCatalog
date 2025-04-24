@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models;
+using GamesCatalog.Views;
 using GamesCatalog.Views.Game;
 using GamesCatalog.Views.Game.IGDBSearch;
 using Models;
 using Models.DTOs;
 using Services;
+using Services.Interfaces;
 using System.Collections.ObjectModel;
 
 namespace GamesCatalog.ViewModels;
@@ -70,6 +72,12 @@ public partial class MainVM(IGameService gameService) : ViewModelBase
     [RelayCommand]
     private async Task Appearing()
     {
+        if (((App)Application.Current).Uid is null)
+        {
+            _ = Shell.Current.GoToAsync($"{nameof(SignIn)}");
+            return;
+        }
+
         if (!(Connectivity.NetworkAccess == NetworkAccess.Internet))
         {
             IsConnectedColor = Colors.Red;
@@ -82,6 +90,7 @@ public partial class MainVM(IGameService gameService) : ViewModelBase
         }
 
         _ = SetTotalsGroupedByStatus();
+
     }
 
     private readonly SemaphoreSlim SetTotalsGroupedByStatusSemaphore = new(1, 1);

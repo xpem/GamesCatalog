@@ -2,7 +2,7 @@
 using Models.DTOs;
 using Models.Resps;
 
-namespace Services
+namespace Services.Interfaces
 {
     public interface IGameService
     {

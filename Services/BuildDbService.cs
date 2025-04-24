@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using Repo;
+using Services.Interfaces;
 
 namespace Services
 {
@@ -11,9 +12,9 @@ namespace Services
             using var context = DbCtx.CreateDbContext();
             context.Database.EnsureCreated();
 
-            VersionDbTables? actualVesionDbTables = context.VersionDbTables.FirstOrDefault();
+            VersionDbTablesDTO? actualVesionDbTables = context.VersionDbTables.FirstOrDefault();
 
-            VersionDbTables newVersionDbTables = new() { Id = 0, Version = 4 };
+            VersionDbTablesDTO newVersionDbTables = new() { Id = 0, Version = 5 };
 
             if (actualVesionDbTables != null)
             {

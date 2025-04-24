@@ -1,6 +1,9 @@
-﻿namespace Models.DTOs;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public record VersionDbTables()
+namespace Models.DTOs;
+
+[Table("VersionDbTables")]
+public class VersionDbTablesDTO()
 {
     public required int Id { get; set; }
 
