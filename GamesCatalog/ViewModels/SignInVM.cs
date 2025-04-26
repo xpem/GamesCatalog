@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using GamesCatalog.Views;
 
 namespace GamesCatalog.ViewModels
 {
@@ -20,9 +21,9 @@ namespace GamesCatalog.ViewModels
         private async Task SignIn() { }
 
         [RelayCommand]
-        private async Task SignUp() { }
+        private async Task SignUp() => await Shell.Current.GoToAsync($"{nameof(SignUp)}");
 
         [RelayCommand]
-        private async Task RecoverPassword() { }
+        private async Task RecoverPassword() => await Shell.Current.GoToAsync($"{nameof(UpdatePassword)}");
     }
 }

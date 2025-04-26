@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GamesCatalog.Views.SignUp"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Components="clr-namespace:GamesCatalog.Components"
+    xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
+    xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
+    x:DataType="vm:SignUpVM">
+    <ContentPage.Resources>
+        <Style x:Key="Icon" TargetType="Label">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="FontSize" Value="40" />
+            <Setter Property="FontFamily" Value="FontAwesomeIcons" />
+            <Setter Property="Padding" Value="0,0,0,10" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout>
+                    <Label Style="{StaticResource Icon}" Text="{x:Static Icons:IconFont.User}" />
+                    <Components:BorderedEntry
+                        LabelText="Name"
+                        MaxLength="150"
+                        Text="{Binding Name}" />
+                    <Components:BorderedEntry
+                        LabelText="Email"
+                        MaxLength="250"
+                        Text="{Binding Email}" />
+                    <Components:BorderedEntry
+                        IsPassword="True"
+                        LabelText="Password"
+                        MaxLength="20"
+                        Text="{Binding Password}" />
+                    <Components:BorderedEntry
+                        IsPassword="True"
+                        LabelText="Confirm Password"
+                        MaxLength="20"
+                        Text="{Binding ConfirmPassword}" />
+                    <Button
+                        Margin="0,10,0,20"
+                        Command="{Binding SignUpCommand}"
+                        ContentLayout="Left, 10"
+                        IsEnabled="{Binding BtnCreateUserIsEnabled}"
+                        Style="{StaticResource BtnConfirm}"
+                        Text="Confirm">
+                        <Button.ImageSource>
+                            <FontImageSource
+                                FontFamily="FontAwesomeIcons"
+                                Glyph="{x:Static Icons:IconFont.UserPlus}"
+                                Size="15"
+                                Color="Black" />
+                        </Button.ImageSource>
+                    </Button>
+                </VerticalStackLayout>
+            </Border>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

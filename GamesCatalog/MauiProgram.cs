@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using ApiRepo;
+using CommunityToolkit.Maui;
 using GamesCatalog.ViewModels;
 using GamesCatalog.ViewModels.Game;
 using GamesCatalog.ViewModels.IGDBSearch;
@@ -44,6 +45,7 @@ namespace GamesCatalog
 
             builder.Services.Services();
             builder.Services.Repositories();
+            builder.Services.ApiRepositories();
 
             return builder.Build();
         }
@@ -55,6 +57,20 @@ namespace GamesCatalog
             services.AddTransientWithShellRoute<Main, MainVM>(nameof(Main));
             services.AddTransientWithShellRoute<GameList, GameListVM>(nameof(GameList));
             services.AddTransientWithShellRoute<SignIn, SignInVM>(nameof(SignIn));
+            services.AddTransientWithShellRoute<SignUp, SignUpVM>(nameof(SignUp));
+            services.AddTransientWithShellRoute<UpdatePassword, UpdatePasswordVM>(nameof(UpdatePassword));
+            return services;
+        }
+
+        public static IServiceCollection ApiRepositories(this IServiceCollection services)
+        {
+            string apiUrl;
+
+            if (DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android)
+                apiUrl = "http://10.0.2.2:5048";
+            else apiUrl = "http://localhost:5048";
+
+            services.AddScoped<IUserApiRepo, UserApiRepo>(p => new UserApiRepo(apiUrl));
             return services;
         }
 

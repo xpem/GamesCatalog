@@ -61,7 +61,7 @@
                         TextColor="{StaticResource PrimaryElementColor}"
                         TextDecorations="Underline">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SignInCommand}" />
+                            <TapGestureRecognizer Command="{Binding SignUpCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
                 </HorizontalStackLayout>

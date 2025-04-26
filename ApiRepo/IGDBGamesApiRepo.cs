@@ -14,7 +14,7 @@ namespace ApiRepo
                 HttpClient httpClient = new();
 
                 //httpClient.DefaultRequestHeaders.Add("Client-ID", ApiKeys.CLIENTID);
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1IiwiZW1haWwiOiJlbWFudWVsLnhwZUBnbWFpbC5jb20iLCJuYmYiOjE3NDQ4Mzg2NjQsImV4cCI6MTc0NTI3MDY2NCwiaWF0IjoxNzQ0ODM4NjY0fQ.x_Q_a1PcGxgeduZFJZllNc7eGOZd1cKBfU7aHH9UQSg");
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer <UserToken>");
 
                 var bodyContent = new StringContent($"{{  \"Search\": \"{search}\",  \"StartIndex\": \"{startIndex}\"}}", Encoding.UTF8, "application/json");
                 //http://10.0.2.2:5048
