@@ -138,7 +138,7 @@ namespace GamesCatalog.ViewModels
 
         public async Task BuildGameStatus()
         {
-            var gameDTO = await gameService.GetByIGDBIdAsync(int.Parse(IgdbId));
+            var gameDTO = await gameService.GetByIGDBIdAsync(int.Parse(IgdbId), ((App)Application.Current).Uid.Value);
 
             if (gameDTO is null) return;
 
@@ -231,6 +231,7 @@ namespace GamesCatalog.ViewModels
                     Summary = Summary,
                     Status = GameSelectedStatus.Value,
                     Rate = _rate,
+                    UserId = ((App)Application.Current).Uid.Value,
                 };
 
                 await gameService.CreateAsync(game);
@@ -264,7 +265,7 @@ namespace GamesCatalog.ViewModels
         {
             if (await Application.Current.Windows[0].Page.DisplayAlert("Confirm", "Remove from list?", "Yes", "Cancel"))
             {
-                _ = gameService.InactivateAsync(null, Id.Value);
+                _ = gameService.InactivateAsync(((App)Application.Current).Uid.Value, Id.Value);
 
                 if (DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android)
                 {

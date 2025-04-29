@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace GamesCatalog.ViewModels.IGDBSearch
 {
-    public partial class IGDBResultsVM : ViewModelBase
+    public partial class IGDBResultsVM(IIGDBGamesApiService iGDBGamesApiService) : ViewModelBase
     {
         private ObservableCollection<UIIGDBGame> listGames = [];
 
@@ -78,7 +78,7 @@ namespace GamesCatalog.ViewModels.IGDBSearch
 
             try
             {
-                List<IGDBGame> resp = await IGDBGamesApiService.GetAsync(SearchText, startIndex);
+                List<IGDBGame> resp = await iGDBGamesApiService.GetAsync(SearchText, startIndex);
 
                 DateTime? releaseDate = null;
 

@@ -1,34 +1,25 @@
-﻿using Models.Resps;
-using System.Net;
-using System.Net.Http;
-using System.Text;
+﻿using Models.Handlers;
+using Models.Resps;
+using System.Text.Json;
 
 namespace ApiRepo
 {
-    public static class IGDBGamesAPIRepo
+    public interface IIGDBGamesAPIRepo
     {
-        public async static Task<ApiResp> GetAsync(string search, int startIndex)
+        Task<ApiResp> GetAsync(string search, int startIndex);
+    }
+
+    public class IGDBGamesAPIRepo(IUserApiRepo userApiRepo) : IIGDBGamesAPIRepo
+    {
+        public async Task<ApiResp> GetAsync(string search, int startIndex)
         {
             try
             {
-                HttpClient httpClient = new();
+                var jsonSearch = JsonSerializer.Serialize(new { Search = search, StartIndex = startIndex });
 
-                //httpClient.DefaultRequestHeaders.Add("Client-ID", ApiKeys.CLIENTID);
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer <UserToken>");
-
-                var bodyContent = new StringContent($"{{  \"Search\": \"{search}\",  \"StartIndex\": \"{startIndex}\"}}", Encoding.UTF8, "application/json");
-                //http://10.0.2.2:5048
-                //http://localhost:5048
-                HttpResponseMessage httpResponse = await httpClient.PostAsync("http://localhost:5048/Game/IGDB", bodyContent);
-
-                return new ApiResp()
-                {
-                    Success = httpResponse.IsSuccessStatusCode,
-                    Error = httpResponse.StatusCode == HttpStatusCode.Unauthorized ? ErrorTypes.Unauthorized : null,
-                    Content = await httpResponse.Content.ReadAsStringAsync()
-                };
+                return await userApiRepo.AuthRequestAsync(Models.RequestsTypes.Post, DeviceHandler.Url + "/Game/IGDB", jsonSearch);
             }
-            catch(Exception ex) { throw; }
+            catch (Exception ex) { throw; }
         }
 
         public static async Task<byte[]> GetGameImageAsync(string imageUrl)

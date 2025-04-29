@@ -40,5 +40,15 @@ namespace Services
                 context.SaveChanges();
             }
         }
+
+        public async Task CleanLocalDatabase()
+        {
+            using var context = DbCtx.CreateDbContext();
+
+            context.Users.RemoveRange(context.Users);
+            context.Games.RemoveRange(context.Games);
+
+            await context.SaveChangesAsync();
+        }
     }
 }

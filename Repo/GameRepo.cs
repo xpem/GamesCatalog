@@ -15,10 +15,10 @@ namespace Repo
             await context.SaveChangesAsync();
         }
 
-        public async Task<GameDTO?> GetByIGDBIdAsync(int igdbId)
+        public async Task<GameDTO?> GetByIGDBIdAsync(int igdbId, int uid)
         {
             using var context = dbCtx.CreateDbContext();
-            return await context.Games.FirstOrDefaultAsync(g => g.IGDBId == igdbId);
+            return await context.Games.FirstOrDefaultAsync(g => g.IGDBId == igdbId && g.UserId.Equals(uid));
         }
 
         public List<TotalGroupedByStatus>? GetTotalsGroupedByStatusAsync(int uid)

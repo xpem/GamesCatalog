@@ -38,7 +38,7 @@ namespace GamesCatalog.ViewModels
             else if (!ConfirmPassword.Equals(Password, StringComparison.CurrentCultureIgnoreCase)) validInformation = false;
 
             if (!validInformation)
-                _ = Application.Current.Windows[0].Page.DisplayAlert("Warning", "   Preencha os campos e confirme a senha corretamente", null, "Ok");
+                _ = Application.Current.Windows[0].Page.DisplayAlert("Warning", "Input the email and password correctly", null, "Ok");
 
             return validInformation;
         }

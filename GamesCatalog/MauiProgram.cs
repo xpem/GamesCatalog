@@ -8,6 +8,7 @@ using GamesCatalog.Views.Game;
 using GamesCatalog.Views.Game.IGDBSearch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Models.Handlers;
 using Repo;
 using Services;
 using Services.Interfaces;
@@ -43,6 +44,19 @@ namespace GamesCatalog
             options.UseSqlite($"Filename={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GamesCatalog.db")}")
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
+
+            //FOR LOCAL TESTS
+            if (DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android)
+            {
+                DeviceHandler.CurrentDevice = DeviceHandler.LocalTestDevice.Emulator;
+                DeviceHandler.Url = "http://10.0.2.2:5048";
+            }
+            else
+            {
+                DeviceHandler.CurrentDevice = DeviceHandler.LocalTestDevice.Windows;
+                DeviceHandler.Url = "http://localhost:5048";
+            }
+
             builder.Services.Services();
             builder.Services.Repositories();
             builder.Services.ApiRepositories();
@@ -64,13 +78,8 @@ namespace GamesCatalog
 
         public static IServiceCollection ApiRepositories(this IServiceCollection services)
         {
-            string apiUrl;
-
-            if (DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android)
-                apiUrl = "http://10.0.2.2:5048";
-            else apiUrl = "http://localhost:5048";
-
-            services.AddScoped<IUserApiRepo, UserApiRepo>(p => new UserApiRepo(apiUrl));
+            services.AddScoped<IUserApiRepo, UserApiRepo>();
+            services.AddScoped<IIGDBGamesAPIRepo, IGDBGamesAPIRepo>();
             return services;
         }
 
@@ -86,6 +95,7 @@ namespace GamesCatalog
             services.AddScoped<IBuildDbService, BuildDbService>();
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IIGDBGamesApiService, IGDBGamesApiService>();
             return services;
         }
     }

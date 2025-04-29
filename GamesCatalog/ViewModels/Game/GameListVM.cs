@@ -106,7 +106,7 @@ namespace GamesCatalog.ViewModels.Game
                 if (!string.IsNullOrEmpty(SearchText))
                     _searchText = SearchText.ToLower();
 
-                List<GameDTO> games = await gameService.GetByStatusAsync(null, GameStatus, CurrentPage, _searchText);
+                List<GameDTO> games = await gameService.GetByStatusAsync(((App)Application.Current).Uid.Value, GameStatus, CurrentPage, _searchText);
 
                 if (games.Count < 10) CurrentPage = -1;
 

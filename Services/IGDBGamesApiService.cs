@@ -1,13 +1,19 @@
 ﻿using ApiRepo;
+using Models.Resps;
 using Newtonsoft.Json;
 
 namespace Services
 {
-    public static class IGDBGamesApiService
+    public interface IIGDBGamesApiService
     {
-        public async static Task<List<Models.Resps.IGDBGame>> GetAsync(string search, int startIndex)
+        Task<List<IGDBGame>> GetAsync(string search, int startIndex);
+    }
+
+    public class IGDBGamesApiService(IIGDBGamesAPIRepo iGDBGamesAPIRepo) : IIGDBGamesApiService
+    {
+        public async Task<List<Models.Resps.IGDBGame>> GetAsync(string search, int startIndex)
         {
-            Models.Resps.ApiResp resp = await IGDBGamesAPIRepo.GetAsync(search, startIndex);
+            Models.Resps.ApiResp resp = await iGDBGamesAPIRepo.GetAsync(search, startIndex);
 
             if (resp is not null && resp.Success && resp.Content is not null)
             {

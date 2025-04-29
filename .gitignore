@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /ApiRepo/ApiKeys.cs
+/ApiRepo/Keys.cs
+/Models/Keys.cs

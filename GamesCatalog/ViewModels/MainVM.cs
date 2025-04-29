@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models;
 using GamesCatalog.Views;
 using GamesCatalog.Views.Game;
@@ -101,7 +100,7 @@ public partial class MainVM(IGameService gameService) : ViewModelBase
 
         try
         {
-            List<TotalGroupedByStatus>? totalsGroupedByStatus = gameService.GetTotalsGroupedByStatus();
+            List<TotalGroupedByStatus>? totalsGroupedByStatus = gameService.GetTotalsGroupedByStatus(((App)Application.Current).Uid.Value);
 
             if (totalsGroupedByStatus is not null && totalsGroupedByStatus.Count > 0)
             {

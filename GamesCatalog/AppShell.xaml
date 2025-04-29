@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:GamesCatalog.Views"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellItem FlyoutItemIsVisible="False" Route="MainPage">
+    <ShellItem FlyoutItemIsVisible="False" Route="Main">
         <ShellContent ContentTemplate="{DataTemplate local:Main}" />
     </ShellItem>
 

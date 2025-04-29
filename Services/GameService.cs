@@ -15,42 +15,33 @@ namespace Services
         {
             game.CreatedAt = game.UpdatedAt = DateTime.Now;
 
-            //User id fixed to 1
-            game.UserId = 1;
-
             await GameRepo.CreateAsync(game);
 
             return new ServiceResp(true);
         }
 
-        public async Task<GameDTO?> GetByIGDBIdAsync(int igdbId) =>
-             await GameRepo.GetByIGDBIdAsync(igdbId);
+        public async Task<GameDTO?> GetByIGDBIdAsync(int igdbId, int uid) =>
+             await GameRepo.GetByIGDBIdAsync(igdbId, uid);
 
         public async Task UpdateStatusAsync(int id, GameStatus gameStatus, int? rate) =>
             await GameRepo.UpdateStatusAsync(id, DateTime.Now, gameStatus, rate);
 
-        public List<TotalGroupedByStatus>? GetTotalsGroupedByStatus(int? uid = null)
+        public List<TotalGroupedByStatus>? GetTotalsGroupedByStatus(int uid)
         {
-            int _uid = uid ?? 1;
-
-            return GameRepo.GetTotalsGroupedByStatusAsync(_uid);
+            return GameRepo.GetTotalsGroupedByStatusAsync(uid);
         }
 
-        public async Task<List<GameDTO>> GetByStatusAsync(int? uid, GameStatus gameStatus, int page, string searchText)
+        public async Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page, string searchText)
         {
-            int _uid = uid ?? 1;
-
             if (string.IsNullOrEmpty(searchText))
-                return await GameRepo.GetByStatusAsync(_uid, gameStatus, page);
+                return await GameRepo.GetByStatusAsync(uid, gameStatus, page);
             else
-                return await GameRepo.GetByStatusAsync(_uid, gameStatus, page, searchText);
+                return await GameRepo.GetByStatusAsync(uid, gameStatus, page, searchText);
         }
 
-        public async Task InactivateAsync(int? uid, int id)
+        public async Task InactivateAsync(int uid, int id)
         {
-            int _uid = uid ?? 1;
-
-            await GameRepo.InactivateAsync(_uid, id, DateTime.Now);
+            await GameRepo.InactivateAsync(uid, id, DateTime.Now);
         }
     }
 }

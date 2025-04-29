@@ -1,11 +1,13 @@
 ﻿using Models;
 using Models.Resps;
+using Repo;
 using System.Net;
 using System.Text;
 
 namespace ApiRepo
 {
-    public static class HttpClientFunctions
+
+    public class HttpClientFunctions()
     {
         public static async Task<ApiResp> Request(RequestsTypes requestsType, string url, string? userToken = null, string? jsonContent = null)
         {
