@@ -65,7 +65,7 @@ namespace Services
                             else
                                 await userRepo.CreateAsync(user);
 
-                            return new ServiceResp(true, user.Id);
+                            return new ServiceResp(true, user);
                         }
                     }
                 }

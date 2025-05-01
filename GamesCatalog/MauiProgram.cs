@@ -57,6 +57,9 @@ namespace GamesCatalog
                 DeviceHandler.Url = "http://localhost:5048";
             }
 
+            builder.Services.AddTransient<AppShell, AppShellVM>();
+            builder.Services.AddSingleton<UserStateVM>();
+
             builder.Services.Services();
             builder.Services.Repositories();
             builder.Services.ApiRepositories();

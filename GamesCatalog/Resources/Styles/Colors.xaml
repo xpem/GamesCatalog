@@ -17,7 +17,7 @@
     <Color x:Key="SecondaryLabelColor">#98BDD3</Color>
     <Color x:Key="Success">#2b9b74</Color>
     <Color x:Key="SecondaryBGColor">#101923</Color>
-
+    <Color x:Key="TitleBarSecondaryBGColor">#1D334B</Color>
 </ResourceDictionary>
 
 

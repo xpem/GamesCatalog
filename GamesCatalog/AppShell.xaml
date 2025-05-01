@@ -3,8 +3,11 @@
     x:Class="GamesCatalog.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Components="clr-namespace:GamesCatalog.Components"
+    xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
     xmlns:local="clr-namespace:GamesCatalog.Views"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
+    FlyoutBackgroundColor="{StaticResource MainBackgroundColor}">
 
     <ShellItem FlyoutItemIsVisible="False" Route="Main">
         <ShellContent ContentTemplate="{DataTemplate local:Main}" />
@@ -14,4 +17,63 @@
         <ShellContent ContentTemplate="{DataTemplate local:SignIn}" />
     </ShellItem>
 
+    <FlyoutItem Title="Home" Icon="{x:Static Icons:IconFont.House}">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:Main}" />
+        </Tab>
+    </FlyoutItem>
+
+    <Shell.FlyoutHeader>
+        <Components:FlyoutHeader Name="{Binding Name}" Email="{Binding Email}" />
+    </Shell.FlyoutHeader>
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid
+                ColumnDefinitions="0.2*,0.8*"
+                HeightRequest="50"
+                HorizontalOptions="Start">
+                <Label
+                    Margin="10,5,10,5"
+                    FontFamily="FontAwesomeIcons"
+                    FontSize="15"
+                    Text="{Binding Icon}"
+                    TextColor="{StaticResource White}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontFamily="OpenSansRegular"
+                    FontSize="15"
+                    Text="{Binding Title}"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <StackLayout>
+                <Button
+                    x:Name="BtnSignOut"
+                    Margin="10,10,10,10"
+                    BackgroundColor="#943126"
+                    Command="{Binding SignOutCommand}"
+                    ContentLayout="Left,10"
+                    FontSize="15"
+                    Style="{StaticResource BtnConfirm}"
+                    Text="Sign out"
+                    TextColor="{StaticResource White}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="FontAwesomeIcons"
+                            Glyph="{x:Static Icons:IconFont.ArrowRightFromBracket}"
+                            Size="12"
+                            Color="{StaticResource White}" />
+                    </Button.ImageSource>
+                </Button>
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
 </Shell>

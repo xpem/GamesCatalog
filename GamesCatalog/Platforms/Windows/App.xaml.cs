@@ -14,8 +14,8 @@ namespace GamesCatalog.WinUI
     public partial class App : MauiWinUIApplication
     {
 
-        const int WindowWidth = 600;
-        const int WindowHeight = 800;
+        const int WindowWidth = 400;
+        const int WindowHeight = 650;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

@@ -1,4 +1,5 @@
-﻿using Models.DTOs;
+﻿using GamesCatalog.ViewModels;
+using Models.DTOs;
 using Services;
 using Services.Interfaces;
 
@@ -12,17 +13,24 @@ namespace GamesCatalog
 
         private IUserService UserService { get; set; }
 
-        public App(IBuildDbService buildDbService,IUserService userService)
+        private UserStateVM UserStateVM { get; set; }
+
+        public App(IBuildDbService buildDbService, IUserService userService, UserStateVM userStateVM)
         {
             BuildDbService = buildDbService;
             UserService = userService;
+            UserStateVM = userStateVM;
 
             InitializeComponent();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
+            var appShellVM = new AppShellVM(BuildDbService, UserService, UserStateVM);
+
             BuildDbService.Init();
+
+            _ = appShellVM.AtualizaUserShowData();
 
             UserDTO? user = UserService.GetUserAsync().Result;
 
@@ -31,7 +39,7 @@ namespace GamesCatalog
                 Uid = user.Id;
             }
 
-            return new Window(new AppShell());
+            return new Window(new AppShell(appShellVM, UserStateVM));
         }
     }
 }

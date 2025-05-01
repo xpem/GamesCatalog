@@ -1,12 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Views;
+using Models.DTOs;
 using Models.Resps;
 using Services;
 
 namespace GamesCatalog.ViewModels
 {
-    public partial class SignInVM(IUserService userService) : ViewModelBase
+    public partial class SignInVM(IUserService userService,UserStateVM userStateVM) : ViewModelBase
     {
         private string email, password, signInText = "Sign In";
 
@@ -50,8 +51,13 @@ namespace GamesCatalog.ViewModels
 
                 if (resp.Success)
                 {
-                    if (resp.Content is not null and int)
-                        ((App)App.Current).Uid = (int)resp.Content;
+                    if (resp.Content is not null and UserDTO user)
+                    {
+                        ((App)App.Current).Uid = (int)user.Id;
+
+                        userStateVM.Name = user.Name;
+                        userStateVM.Email = user.Email;
+                    }
 
                     _ = Shell.Current.GoToAsync($"//{nameof(Main)}");
                 }
