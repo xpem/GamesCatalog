@@ -50,6 +50,14 @@ namespace Repo
              .SetProperty(z => z.Inactive, true));
         }
 
+        public async Task UpdateExternalIdAsync(int id, int externalid)
+        {
+            using var context = dbCtx.CreateDbContext();
+            await context.Games.Where(x => x.Id == id)
+                .ExecuteUpdateAsync(y => y
+                .SetProperty(z => z.ExternalId, externalid));
+        }
+
         public async Task UpdateStatusAsync(int id, DateTime updatedAt, GameStatus status, int? rate)
         {
             using var context = dbCtx.CreateDbContext();

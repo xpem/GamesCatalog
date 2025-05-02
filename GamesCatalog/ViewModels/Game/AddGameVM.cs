@@ -234,13 +234,13 @@ namespace GamesCatalog.ViewModels
                     UserId = ((App)Application.Current).Uid.Value,
                 };
 
-                await gameService.CreateAsync(game);
+                await gameService.CreateAsync(game, IsOn);
 
                 displayMessage = "Status Added!";
             }
             else
             {
-                await gameService.UpdateStatusAsync(Id.Value, GameSelectedStatus.Value, _rate);
+                await gameService.UpdateStatusAsync(Id.Value, GameSelectedStatus.Value, _rate, IsOn);
 
                 displayMessage = "Status Updated!";
             }
@@ -265,7 +265,7 @@ namespace GamesCatalog.ViewModels
         {
             if (await Application.Current.Windows[0].Page.DisplayAlert("Confirm", "Remove from list?", "Yes", "Cancel"))
             {
-                _ = gameService.InactivateAsync(((App)Application.Current).Uid.Value, Id.Value);
+                _ = gameService.InactivateAsync(((App)Application.Current).Uid.Value, Id.Value, IsOn);
 
                 if (DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android)
                 {

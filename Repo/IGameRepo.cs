@@ -13,5 +13,6 @@ namespace Repo
         Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page);
         Task InactivateAsync(int uid, int id, DateTime updatedAt);
         Task<List<GameDTO>> GetByStatusAsync(int uid, GameStatus gameStatus, int page, string searchText);
+        Task UpdateExternalIdAsync(int id, int externalid);
     }
 }
