@@ -84,6 +84,7 @@ namespace GamesCatalog
             services.AddScoped<IUserApiRepo, UserApiRepo>();
             services.AddScoped<IIGDBGamesAPIRepo, IGDBGamesAPIRepo>();
             services.AddScoped<IGameApiRepo, GameApiRepo>();
+
             return services;
         }
 
@@ -91,6 +92,8 @@ namespace GamesCatalog
         {
             services.AddScoped<IGameRepo, GameRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IApiOperationRepo, ApiOperationRepo>();
+
             return services;
         }
 
@@ -101,6 +104,8 @@ namespace GamesCatalog
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIGDBGamesApiService, IGDBGamesApiService>();
             services.AddScoped<IGameApiService, GameApiService>();
+            services.AddScoped<IApiOperationService, ApiOperationService>();
+
             return services;
         }
     }

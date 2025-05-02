@@ -1,12 +1,14 @@
 ﻿using Models;
+using Models.ApiOperation;
 using Models.DTOs;
 using Models.Resps;
 using Repo;
 using Services.Interfaces;
+using System.Text.Json;
 
 namespace Services
 {
-    public class GameService(IGameRepo GameRepo, IGameApiService gameApiService) : IGameService
+    public class GameService(IGameRepo GameRepo, IGameApiService gameApiService, IApiOperationService apiOperationService) : IGameService
     {
         public static readonly string ImagesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Inventory");
 
@@ -33,6 +35,8 @@ namespace Services
                         return new ServiceResp(false, null);
                 }
             }
+            else
+                await apiOperationService.InsertOperationAsync(JsonSerializer.Serialize(game), game.Id.ToString(), ExecutionType.Insert, ObjectType.Game);
 
             return new ServiceResp(true);
         }
@@ -48,6 +52,9 @@ namespace Services
             {
                 _ = gameApiService.UpdateAsync(id, gameStatus, rate);
             }
+            else await apiOperationService.InsertOperationAsync(JsonSerializer.Serialize(new ApiOpGameStatus(id, gameStatus, rate)),
+                id.ToString(), ExecutionType.Update, ObjectType.Game);
+
         }
 
         public List<TotalGroupedByStatus>? GetTotalsGroupedByStatus(int uid)
@@ -71,6 +78,8 @@ namespace Services
             {
                 _ = gameApiService.InactivateAsync(id);
             }
+            else await apiOperationService.InsertOperationAsync(null, id.ToString(), ExecutionType.Delete, ObjectType.Game);
+
         }
     }
 }

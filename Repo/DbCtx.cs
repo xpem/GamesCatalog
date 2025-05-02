@@ -11,4 +11,6 @@ public class DbCtx(DbContextOptions<DbCtx> options) : DbContext(options)
 
     public virtual required DbSet<UserDTO> Users { get; set; }
 
+    public virtual required DbSet<ApiOperationDTO> ApiOperations { get; set; }
+
 }

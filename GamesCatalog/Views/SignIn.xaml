@@ -7,7 +7,9 @@
     xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
     xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
     x:Name="this"
-    x:DataType="vm:SignInVM">
+    x:DataType="vm:SignInVM"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
