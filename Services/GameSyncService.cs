@@ -49,7 +49,11 @@ namespace Services
                         apiGame.Id = localGame?.Id ?? 0;
 
                         if (localGame == null && !apiGame.Inactive)
+                        {
+                            await IGDBGamesApiService.SaveImageAsync(apiRespObj.Game.CoverUrl, $"{apiRespObj.Game.IGDBId}.jpg");
+
                             await service.CreateAsync(apiGame, true);
+                        }
                         else if (apiGame.UpdatedAt > localGame?.UpdatedAt)
                             await service.UpdateStatusAsync(localGame.Id, apiGame.Status, apiGame.Rate, true);
                     }

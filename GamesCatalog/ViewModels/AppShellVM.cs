@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GamesCatalog.Utils.Sync;
 using GamesCatalog.Views;
 using Models.DTOs;
 using Services;
@@ -7,11 +8,11 @@ using Services.Interfaces;
 
 namespace GamesCatalog.ViewModels
 {
-    public partial class AppShellVM(IBuildDbService buildDbService, IUserService userService, UserStateVM userStateVM) : ObservableObject
+    public partial class AppShellVM(ISyncService syncService, IBuildDbService buildDbService, IUserService userService, UserStateVM userStateVM) : ObservableObject
     {
         public async Task AtualizaUserShowData()
         {
-            UserDTO? user = await userService.GetUserAsync();
+            UserDTO? user = await userService.GetAsync();
 
             if (user is not null)
             {
@@ -23,6 +24,9 @@ namespace GamesCatalog.ViewModels
         [RelayCommand]
         private async Task SignOut()
         {
+            syncService.ThreadIsRunning = false;
+
+            syncService.Timer?.Dispose();
 
             (App.Current as App).Uid = 0;
 

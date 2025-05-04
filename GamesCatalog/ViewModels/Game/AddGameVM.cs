@@ -127,7 +127,7 @@ namespace GamesCatalog.ViewModels
                     IgdbId = Game.Id;
                     Name = Game.Name;
                     ReleaseDate = Game.ReleaseDate;
-                    CoverUrl = Game.CoverUrl;
+                    CoverUrl = Path.Combine(GameService.ImagesPath, $"{Game.Id}.jpg");
                     Platforms = Game.Platforms;
                     Summary = Game.Summary;
 

@@ -1,5 +1,6 @@
 ﻿using ApiRepo;
 using CommunityToolkit.Maui;
+using GamesCatalog.Utils.Sync;
 using GamesCatalog.ViewModels;
 using GamesCatalog.ViewModels.Game;
 using GamesCatalog.ViewModels.IGDBSearch;
@@ -59,6 +60,7 @@ namespace GamesCatalog
 
             builder.Services.AddTransient<AppShell, AppShellVM>();
             builder.Services.AddSingleton<UserStateVM>();
+            builder.Services.AddSingleton<ISyncService, SyncService>();
 
             builder.Services.Services();
             builder.Services.Repositories();
@@ -69,6 +71,7 @@ namespace GamesCatalog
 
         public static IServiceCollection ShellRoutes(this IServiceCollection services)
         {
+            services.AddTransientWithShellRoute<FirstSyncProcess, FirstSyncProcessVM>(nameof(FirstSyncProcess));
             services.AddTransientWithShellRoute<IGDBResults, IGDBResultsVM>(nameof(IGDBResults));
             services.AddTransientWithShellRoute<AddGame, AddGameVM>(nameof(AddGame));
             services.AddTransientWithShellRoute<Main, MainVM>(nameof(Main));

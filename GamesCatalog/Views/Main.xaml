@@ -9,7 +9,7 @@
     xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
     x:Name="this"
     x:DataType="vm:MainVM"
-    Shell.NavBarIsVisible="False">
+    Shell.FlyoutBehavior="Flyout">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior
             BindingContext="{Binding BindingContext, Source={x:Reference this}, x:DataType=MainVM}"

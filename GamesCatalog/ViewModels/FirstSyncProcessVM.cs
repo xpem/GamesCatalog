@@ -47,10 +47,6 @@ namespace GamesCatalog.ViewModels
 
                         Progress = 0.5M;
 
-                        await GameSyncService.LocalToApiSync(ApiOperationService, GameApiService, GameService, user.Id, user.LastUpdate);
-
-                        Progress = 0.75M;
-
                         await UserService.UpdateLastUpdate(user.Id);
 
                         Progress = 1;

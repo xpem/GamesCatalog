@@ -9,7 +9,7 @@
     xmlns:vm="clr-namespace:GamesCatalog.ViewModels"
     FlyoutBackgroundColor="{StaticResource MainBackgroundColor}">
 
-    <ShellItem FlyoutItemIsVisible="False" Route="Main">
+    <ShellItem FlyoutItemIsVisible="True" Route="Main">
         <ShellContent ContentTemplate="{DataTemplate local:Main}" />
     </ShellItem>
 

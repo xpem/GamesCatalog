@@ -89,6 +89,9 @@
 	  <MauiXaml Update="Components\RatingBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\FirstSyncProcess.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Game\AddGame.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

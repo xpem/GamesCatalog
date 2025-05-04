@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using GamesCatalog.Models;
 using Models.DTOs;
+using Services;
 using Services.Interfaces;
 using System.Collections.ObjectModel;
 
@@ -116,7 +117,7 @@ namespace GamesCatalog.ViewModels.Game
                     {
                         Id = game.IGDBId.ToString() ?? throw new ArgumentNullException("IGDBId"),
                         LocalId = game.Id,
-                        CoverUrl = game.CoverUrl ?? "",
+                        CoverUrl = Path.Combine(GameService.ImagesPath, $"{game.IGDBId}.jpg"),
                         Status = game.Status,
                         Rate = game.Status == GameStatus.Played ? game.Rate : 0,
                         Name = game.Name,
