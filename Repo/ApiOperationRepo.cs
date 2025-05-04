@@ -7,7 +7,7 @@ namespace Repo
     {
         Task<bool> CheckIfHasPendingOperation();
         Task<bool> CheckIfHasPendingOperationWithObjectId(string objectId);
-        Task<List<ApiOperationDTO>> GetPendingOperationsByStatusAsync(ApiOperationStatus operationStatus);
+        Task<List<ApiOperationDTO>> GetByStatusAsync(ApiOperationStatus operationStatus);
         Task InsertOperationInQueueAsync(ApiOperationDTO apiOperation);
         Task UpdateOperationStatusAsync(ApiOperationStatus operationStatus, int operationId);
     }
@@ -24,7 +24,7 @@ namespace Repo
                 .SetProperty(z => z.UpdatedAt, DateTime.Now));
         }
 
-        public async Task<List<ApiOperationDTO>> GetPendingOperationsByStatusAsync(ApiOperationStatus operationStatus)
+        public async Task<List<ApiOperationDTO>> GetByStatusAsync(ApiOperationStatus operationStatus)
         {
             using var context = dbCtx.CreateDbContext();
             return await context.ApiOperations.Where(x => x.Status == operationStatus).OrderBy(x => x.CreatedAt).ToListAsync();

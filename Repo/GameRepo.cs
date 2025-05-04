@@ -21,6 +21,12 @@ namespace Repo
             return await context.Games.FirstOrDefaultAsync(g => g.IGDBId == igdbId && g.UserId.Equals(uid));
         }
 
+        public async Task<GameDTO?> GetByIdAsync(int id, int uid)
+        {
+            using var context = dbCtx.CreateDbContext();
+            return await context.Games.FirstOrDefaultAsync(g => g.Id == id && g.UserId.Equals(uid));
+        }
+
         public List<TotalGroupedByStatus>? GetTotalsGroupedByStatusAsync(int uid)
         {
             using var context = dbCtx.CreateDbContext();

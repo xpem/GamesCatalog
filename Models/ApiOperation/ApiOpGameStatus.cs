@@ -2,9 +2,9 @@
 
 namespace Models.ApiOperation
 {
-    public class ApiOpGameStatus(int userId, GameStatus? status, int? rate) : DTOBase
+    public class ApiOpGameStatus(int id, GameStatus? status, int? rate)
     {
-        public int UserId { get; set; } = userId;
+        public int Id { get; set; } = id;
 
         public GameStatus? Status { get; set; } = status;
 

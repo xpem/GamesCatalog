@@ -8,6 +8,7 @@ namespace Repo
         Task<int> CreateAsync(UserDTO user);
         Task<UserDTO?> GetAsync();
         Task UpdateAsync(UserDTO user);
+        Task UpdateLastUpdateAsync(DateTime lastUpdate, int uid);
     }
 
     public class UserRepo(IDbContextFactory<DbCtx> dbCtx) : IUserRepo
@@ -30,6 +31,12 @@ namespace Repo
             using var context = dbCtx.CreateDbContext();
             context.Users.Update(user);
             await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateLastUpdateAsync(DateTime lastUpdate, int uid)
+        {
+            using var context = dbCtx.CreateDbContext();
+           await context.Users.Where(x => x.Id == uid).ExecuteUpdateAsync(y => y.SetProperty(z => z.LastUpdate, lastUpdate));
         }
     }
 }

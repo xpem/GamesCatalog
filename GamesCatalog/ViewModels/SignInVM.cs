@@ -59,7 +59,7 @@ namespace GamesCatalog.ViewModels
                         userStateVM.Email = user.Email;
                     }
 
-                    _ = Shell.Current.GoToAsync($"//{nameof(Main)}");
+                    await Shell.Current.GoToAsync($"{nameof(FirstSyncProcess)}", false);
                 }
                 else
                 {

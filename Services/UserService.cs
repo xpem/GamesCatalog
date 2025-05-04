@@ -10,15 +10,16 @@ namespace Services
 {
     public interface IUserService
     {
-        Task<UserDTO?> GetUserAsync();
+        Task<UserDTO?> GetAsync();
         Task<ApiResp> RecoverPasswordAsync(string email);
         Task<ServiceResp> SignInAsync(string email, string password);
         Task<ServiceResp> SignUpAsync(string name, string email, string password);
+        Task UpdateLastUpdate(int uid);
     }
 
     public class UserService(IUserRepo userRepo, IUserApiRepo userApiRepo,IBuildDbService buildDbService) : IUserService
     {
-        public async Task<UserDTO?> GetUserAsync() => await userRepo.GetAsync();
+        public async Task<UserDTO?> GetAsync() => await userRepo.GetAsync();
 
         public async Task<ServiceResp> SignInAsync(string email, string password)
         {
@@ -109,5 +110,8 @@ namespace Services
 
             return new() { Success = resp.Success, Content = resp.Content, Error = (ErrorTypes?)resp.Error };
         }
+
+        public async Task UpdateLastUpdate(int uid) =>
+            await userRepo.UpdateLastUpdateAsync(DateTime.Now, uid);
     }
 }

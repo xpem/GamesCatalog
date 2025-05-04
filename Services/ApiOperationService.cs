@@ -5,7 +5,10 @@ namespace Services
 {
     public interface IApiOperationService
     {
+        Task<List<ApiOperationDTO>> GetByStatusAsync(ApiOperationStatus operationStatus);
         Task InsertOperationAsync(string? jsonContent, string objectId, ExecutionType executionType, ObjectType objectType);
+
+        Task UpdateOperationStatusAsync(ApiOperationStatus operationStatus, int operationId);
     }
 
     public class ApiOperationService(IApiOperationRepo operationQueueRepo) : IApiOperationService
@@ -27,5 +30,11 @@ namespace Services
 
             await operationQueueRepo.InsertOperationInQueueAsync(apiOperation);
         }
+
+        public async Task UpdateOperationStatusAsync(ApiOperationStatus operationStatus, int operationId) =>
+            await operationQueueRepo.UpdateOperationStatusAsync(operationStatus, operationId);
+
+        public async Task<List<ApiOperationDTO>> GetByStatusAsync(ApiOperationStatus operationStatus) =>
+            await operationQueueRepo.GetByStatusAsync(operationStatus);
     }
 }

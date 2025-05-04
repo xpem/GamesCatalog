@@ -79,7 +79,10 @@ namespace Services
                 _ = gameApiService.InactivateAsync(id);
             }
             else await apiOperationService.InsertOperationAsync(null, id.ToString(), ExecutionType.Delete, ObjectType.Game);
-
         }
+
+        public async Task UpdateExternalIdAsync(int id, int externalid) => await GameRepo.UpdateExternalIdAsync(id, externalid);
+
+        public async Task<GameDTO?> GetByIdAsync(int id, int uid) => await GameRepo.GetByIdAsync(id, uid);
     }
 }

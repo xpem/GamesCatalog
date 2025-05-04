@@ -1,6 +1,8 @@
 ﻿using ApiRepo;
 using Models.DTOs;
 using Models.Resps;
+using Models.Resps.Api;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace Services
@@ -8,7 +10,7 @@ namespace Services
     public interface IGameApiService
     {
         Task<ServiceResp> CreateAsync(GameDTO game);
-        Task<ServiceResp> GetByLastUpdateAsync(DateTime lastUpdate, int page);
+        Task<List<GameStatusApiResp>?> GetByLastUpdateAsync(DateTime lastUpdate, int page);
         Task<ServiceResp> InactivateAsync(int gameId);
         Task<ServiceResp> UpdateAsync(int externalId, GameStatus status, int? rate);
     }
@@ -68,10 +70,21 @@ namespace Services
             return new ServiceResp(false, null);
         }
 
-        public async Task<ServiceResp> GetByLastUpdateAsync(DateTime lastUpdate, int page)
+        public async Task<List<GameStatusApiResp>?> GetByLastUpdateAsync(DateTime lastUpdate, int page)
         {
             ApiResp apiResp = await gameApiRepo.GetByLastUpdateAsync(lastUpdate, page);
-            return BuildGameStatusIdResp(apiResp);
+
+            if (apiResp is not null && apiResp.Success && apiResp.Content is not null)
+            {
+                return JsonSerializer.Deserialize<List<GameStatusApiResp>?>(apiResp.Content);
+            }
+            else
+            {
+                if (apiResp?.Content is not null and string)
+                    throw new Exception($"Error getting data from API: {apiResp.Content}");
+                else
+                    throw new Exception("Error getting data from API");
+            }
         }
     }
 }

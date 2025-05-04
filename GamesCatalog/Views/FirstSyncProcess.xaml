@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GamesCatalog.Views.FirstSyncProcess"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Icons="clr-namespace:GamesCatalog.Resources.Fonts"
+    Title="FirstSyncProcess"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+    <ContentPage.Resources>
+        <Style x:Key="Icon" TargetType="Label">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="FontSize" Value="70" />
+            <Setter Property="FontFamily" Value="FontAwesomeIcons" />
+            <Setter Property="Padding" Value="0,0,0,10" />
+        </Style>
+    </ContentPage.Resources>
+    <VerticalStackLayout VerticalOptions="Center">
+        <Label Style="{StaticResource Icon}" Text="{x:Static Icons:IconFont.Gamepad}" />
+        <Label
+            Margin="0,0,0,10"
+            HorizontalOptions="Center"
+            Text="Syncing..."
+            TextColor="White"
+            VerticalOptions="Center" />
+        <ProgressBar
+            Margin="5,0,5,0"
+            Progress="{Binding Progress}"
+            ProgressColor="{StaticResource PrimaryColor}" />
+    </VerticalStackLayout>
+</ContentPage>

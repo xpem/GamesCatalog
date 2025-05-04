@@ -51,7 +51,7 @@ namespace ApiRepo
 
         public async Task<ApiResp> GetByLastUpdateAsync(DateTime lastUpdate, int page)
         {
-            return await userApiRepo.AuthRequestAsync(RequestsTypes.Get, DeviceHandler.Url + $"/game/byupdatedat/{lastUpdate:yyyy-MM-ddThh:mm:ss.fff}/{page}");
+            return await userApiRepo.AuthRequestAsync(RequestsTypes.Get, DeviceHandler.Url + $"/game/status/byupdatedat/{lastUpdate:yyyy-MM-ddThh:mm:ss.fff}/{page}");
         }
     }
 }
